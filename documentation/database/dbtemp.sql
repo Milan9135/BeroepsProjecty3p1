@@ -10,7 +10,7 @@
 -- -----------------------------------------------------
 -- Schema Tandartsdb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `Tandartsdb` DEFAULT CHARACTER SET utf8 ;
+CREATE DATABASE IF NOT EXISTS `Tandartsdb` DEFAULT CHARACTER SET utf8 ;
 USE `Tandartsdb` ;
 
 -- -----------------------------------------------------
@@ -21,9 +21,7 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Users` (
   `Email` VARCHAR(225) NULL,
   `Wachtwoord` VARCHAR(225) NULL,
   `Usertype` ENUM("Patiënt", "Tandarts", "Admin") NULL DEFAULT 'Patiënt',
-  PRIMARY KEY (`userID`))
-ENGINE = InnoDB;
-
+  PRIMARY KEY (`userID`));
 
 -- -----------------------------------------------------
 -- Table `Tandartsdb`.`Patiënt`
@@ -34,8 +32,7 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Patiënt` (
   `Geboortedatum` VARCHAR(225) NULL,
   `Telefoonnummer` VARCHAR(225) NULL,
   `adres` VARCHAR(225) NULL,
-  PRIMARY KEY (`PatiëntID`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`PatiëntID`));
 
 
 -- -----------------------------------------------------
@@ -50,8 +47,7 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Tandarts` (
   `Beoordeling` FLOAT NULL,
   `Specialisaties` VARCHAR(225) NULL,
   `Beschrijving` VARCHAR(225) NULL,
-  PRIMARY KEY (`tandartsID`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`tandartsID`));
 
 
 -- -----------------------------------------------------
@@ -63,13 +59,11 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Afspraken` (
   `Beschrijving` VARCHAR(225) NULL,
   `userID` INT NOT NULL,
   PRIMARY KEY (`afspraakID`),
-  INDEX `fk_Afspraken_Users_idx` (`userID` ASC) VISIBLE,
   CONSTRAINT `fk_Afspraken_Users`
     FOREIGN KEY (`userID`)
     REFERENCES `Tandartsdb`.`Users` (`userID`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION);
 
 
 -- -----------------------------------------------------
@@ -80,13 +74,11 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Behandelingen` (
   `userID` INT NOT NULL,
   `Beschrijving` VARCHAR(225) NULL,
   PRIMARY KEY (`BehandelingenID`),
-  INDEX `fk_Behandelingen_Users1_idx` (`userID` ASC) VISIBLE,
   CONSTRAINT `fk_Behandelingen_Users1`
     FOREIGN KEY (`userID`)
     REFERENCES `Tandartsdb`.`Users` (`userID`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION);
 
 
 -- -----------------------------------------------------
@@ -97,9 +89,8 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Verzekeringen` (
   `userID` INT NOT NULL,
   `Beschrijving` VARCHAR(225) NULL,
   PRIMARY KEY (`VerzekeringenID`),
-  INDEX `fk_Verzekeringen_Users1_idx` (`userID` ASC) VISIBLE,
   CONSTRAINT `fk_Verzekeringen_Users1`
     FOREIGN KEY (`userID`)
     REFERENCES `Tandartsdb`.`Users` (`userID`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION);

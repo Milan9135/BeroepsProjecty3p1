@@ -9,4 +9,3 @@ Afspraken: afspraakID(PK), DatumTijd, Beschrijving, userID(FK)
 Behandelingen: behandelingID(PK), userID(FK), Beschrijving
 
 Verzekeringen: verzekeringID(PK), userID(FK), Beschrijving
-

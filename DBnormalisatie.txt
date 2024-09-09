@@ -1,7 +1,12 @@
-Users: userID(PK), Naam, Geboortedatum, Telefoonnummer, Adres, Email, Wachtwoord, Specialisaties, Beoordelingen, Usertype(PATIENT? MEDEWERKER? ADMIN?)
+Users: userID(PK), Email, Wachtwoord, Usertype(PATIENT? TANDARTS? ADMIN?)
+
+Patiënt: patientID(PK), Naam, Geboortedatum, Telefoonnummer, Adres
+
+Tandarts: tandartsID(PK), Naam, Geboortedarum, Telefoonnummer, Adres, Beoordeling, Specialisaties, Beschrijving
 
 Afspraken: afspraakID(PK), DatumTijd, Beschrijving, userID(FK)
 
-Behandelingen: behandelingID(PK), Beschrijving, userID(FK)
+Behandelingen: behandelingID(PK), userID(FK), Beschrijving
 
-Verzekeringen: verzekeringID(PK), 
+Verzekeringen: verzekeringID(PK), userID(FK), Beschrijving
+

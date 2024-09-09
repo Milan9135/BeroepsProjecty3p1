@@ -1,4 +1,7 @@
-Users: userID (PK), Naam, Geboortedatum, Telefoonnummer, Adres, Email, Wachtwoord, Usertype(PATIENT? MEDEWERKER? ADMIN?)
+Users: userID(PK), Naam, Geboortedatum, Telefoonnummer, Adres, Email, Wachtwoord, Specialisaties, Beoordelingen, Usertype(PATIENT? MEDEWERKER? ADMIN?)
 
-Afspraken: afspraakID, DatumTijd, Beschrijving, userID(FK)
+Afspraken: afspraakID(PK), DatumTijd, Beschrijving, userID(FK)
 
+Behandelingen: behandelingID(PK), Beschrijving, userID(FK)
+
+Verzekeringen: verzekeringID(PK), 

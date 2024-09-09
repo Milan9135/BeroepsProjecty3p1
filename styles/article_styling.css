@@ -1,0 +1,48 @@
+/* General Styling for Section and Articles */
+.articles-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 40px;
+    border-radius: 10px;
+}
+
+.articles-section article {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Effect for Article */
+.articles-section article:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for Headings */
+.articles-section article h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #2a5298;
+}
+
+/* Styling for Paragraph */
+.articles-section article p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Make the section responsive */
+@media (max-width: 600px) {
+    .articles-section {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .articles-section article {
+        padding: 15px;
+    }
+}

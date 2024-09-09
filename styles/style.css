@@ -1,1 +1,54 @@
-/* basic styling for all website pages including navbar and footer styling */
+/* Navbar styling */
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 60px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navbar a:hover {
+    background: #ddd;
+    color: black;
+}
+
+/* Footer styling */
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+}
+
+/* Styling for the body of the website */
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    place-content: center;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+}
+

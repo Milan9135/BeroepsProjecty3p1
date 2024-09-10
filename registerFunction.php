@@ -1,6 +1,6 @@
 <?php
 
-include '../db.php';
+include '../homepage/db.php';
 $myDb = new DB("Tandartsdb");
 class user
 {

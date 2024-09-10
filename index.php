@@ -11,10 +11,10 @@
 
 <body>
     <nav class="navbar">
-        <a href="index.html">Home</a>
+        <a href="index.php">Home</a>
 
         <?php 
-        if (!isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['user_id'])) {
             echo '<a href="logout.php">Logout</a>';
         } else {
             echo '<a href="login.php">Login</a>';
@@ -22,10 +22,10 @@
         ?>
 
         <?php 
-        if (!isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['user_id'])) {
             echo '<a href="profiel.php">Mijn account</a>';
         } else {
-            echo '<a href="./register/register.php">Register</a>';
+            echo '<a href="register.php">Register</a>';
         }
         ?>
 

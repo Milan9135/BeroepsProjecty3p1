@@ -4,15 +4,30 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="tand.css">
+    <link rel="stylesheet" href="styles/tand.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="navbar">
-        <a href="./indexs.html/">Home</a>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
+<nav class="navbar">
+        <a href="index.php">Home</a>
+
+        <?php 
+        if (isset($_SESSION['user_id'])) {
+            echo '<a href="logout.php">Logout</a>';
+        } else {
+            echo '<a href="login.php">Login</a>';
+        }
+        ?>
+
+        <?php 
+        if (isset($_SESSION['user_id'])) {
+            echo '<a href="profiel.php">Mijn account</a>';
+        } else {
+            echo '<a href="register.php">Register</a>';
+        }
+        ?>
+
     </nav>
 
     <main>

@@ -1,7 +1,6 @@
 <?php
 include "registerFunction.php";
 
-
 $user = new user($myDb);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -10,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         try {
             $user->insertUser($_POST['email'], $_POST['wachtwoord']);
-            echo "toegevoegd";
+            $toegevoegd = '<p>toegevoegd</p>';
         } catch (Exception $e) {
             'Error: ' . $e->getMessage();
         }
@@ -44,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h2>Registreren</h2>
             <form id="registerForm" method="POST">
                 <div class="input-group">
-                    <label for="username">naam</label>
+                    <label for="username">Naam</label>
                     <input type="text" id="naam" name="naam" required />
                 </div>
                 <div class="input-group">
@@ -64,6 +63,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         required />
                 </div>
                 <button type="submit">Registreren</button>
+
+
+                <?php
+
+                if (isset($toegevoegd) && !empty($toegevoegd)) {
+                    echo '<p style="color: green; font-size: 1.5em;
+                                            font-weight: bold;
+                                            text-align: center;
+                                            background-color: #f0f8f0;
+                                            padding: 10px;
+                                            border-radius: 8px;
+                                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                            Succesvol geregistreert</p>';
+
+            
+
+
+                }
+
+                ?>
+
+
             </form>
             <p id="message"></p>
         </div>

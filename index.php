@@ -12,9 +12,24 @@
 <body>
     
     <nav class="navbar">
-        <a href="../homepage/indexs.html">Home</a>
-        <a href="../inlog/inlog.php">Login</a>
-        <a href="../register/register.php">Register</a>
+        <a href="index.php">Home</a>
+
+        <?php 
+        if (isset($_SESSION['user_id'])) {
+            echo '<a href="logout.php">Logout</a>';
+        } else {
+            echo '<a href="login.php">Login</a>';
+        }
+        ?>
+
+        <?php 
+        if (isset($_SESSION['user_id'])) {
+            echo '<a href="profiel.php">Mijn account</a>';
+        } else {
+            echo '<a href="register.php">Register</a>';
+        }
+        ?>
+
     </nav>
     <header>
         <h1>TandartsPlatform?</h1>

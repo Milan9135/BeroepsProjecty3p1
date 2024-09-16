@@ -31,15 +31,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registreren</title>
-    <link rel="stylesheet" href="register.css" />
+    <link rel="stylesheet" href="styles/register.css" />
 </head>
 
 <body>
 
-    <nav class="navbar">
-        <a href="../homepage/indexs.html">Home</a>
-        <a href="../inlog/inlog.php">Login</a>
-        <a href="../register/register.php">Register</a>
+<nav class="navbar">
+        <a href="index.php">Home</a>
+
+        <?php 
+        if (isset($_SESSION['user_id'])) {
+            echo '<a href="logout.php">Logout</a>';
+        } else {
+            echo '<a href="login.php">Login</a>';
+        }
+        ?>
+
+        <?php 
+        if (isset($_SESSION['user_id'])) {
+            echo '<a href="profiel.php">Mijn account</a>';
+        } else {
+            echo '<a href="register.php">Register</a>';
+        }
+        ?>
+
     </nav>
 
     <main>

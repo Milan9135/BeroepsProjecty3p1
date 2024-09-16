@@ -1,5 +1,5 @@
 <?php
-include "registerFunction.php";
+include "./Functions/registerFunction.php";
 
 $user = new user($myDb);
 

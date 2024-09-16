@@ -1,0 +1,134 @@
+/* Navbar styling */
+.navbar {
+    background-color: #1a1a2e;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    color: #f5f5f5;
+    text-align: center;
+    padding: 12px 50px;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar a:hover {
+    background: #e94560;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Footer styling */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #1a1a2e;
+    color: #f5f5f5;
+    text-align: center;
+    padding: 10px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Styling for the body of the website */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    place-content: center;
+    flex-direction: column;
+    color: #333;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    margin-bottom: 150px;
+}
+
+/* Container Styling */
+.register-container, .welcome-container {
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 14px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    width: 350px;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Heading Styling */
+h1, h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #1a1a2e;
+}
+
+/* Input Group Styling */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1a1a2e;
+}
+
+.input-group input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 90%;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #e94560;
+    outline: none;
+}
+
+/* Submit Button Styling */
+button[type="submit"] {
+    background-color: #1a1a2e;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #e94560;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

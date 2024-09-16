@@ -43,4 +43,8 @@ class DB
         $stmt = $this->execute($sql, $placeholders);
         return $stmt->rowCount();
     }
+    public function lastInsertId()
+    {
+        return $this->dbh->lastInsertId();
+    }
 }

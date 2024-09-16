@@ -31,8 +31,11 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Patiënt` (
   `Naam` VARCHAR(225) NULL,
   `Geboortedatum` VARCHAR(225) NULL,
   `Telefoonnummer` VARCHAR(225) NULL,
-  `adres` VARCHAR(225) NULL,
-  PRIMARY KEY (`PatiëntID`));
+  `Adres` VARCHAR(225) NULL,
+  `userID` INT, -- Foreign key naar de Users-tabel
+  PRIMARY KEY (`PatiëntID`),
+  FOREIGN KEY (`userID`) REFERENCES Users(`userID`) ON DELETE CASCADE
+);
 
 
 -- -----------------------------------------------------
@@ -47,8 +50,9 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Tandarts` (
   `Beoordeling` FLOAT NULL,
   `Specialisaties` VARCHAR(225) NULL,
   `Beschrijving` VARCHAR(225) NULL,
+  `userID` INT, -- Foreign key naar de Users-tabel
   PRIMARY KEY (`tandartsID`));
-
+  FOREIGN KEY (`userID`) REFERENCES Users(`userID`) ON DELETE CASCADE
 
 -- -----------------------------------------------------
 -- Table `Tandartsdb`.`Afspraken`

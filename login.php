@@ -1,33 +1,40 @@
 <?php
-$host = "localhost";
-$dbname = "Tandartsdb";
-$username = "root";
-$password = "";
+session_start();
+include 'db.php';
 
-$conn = new mysqli($host, $username, $password, $dbname);
+$myDb = new DB("Tandartsdb");
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Check if form is submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['wachtwoord'];
+
+    // Input validation
+    if (empty($email) || empty($password)) {
+        echo "Vul alle velden in.";
+    } else {
+        try {
+            // Prepare and execute query to find user
+            $query = $myDb->execute("SELECT * FROM users WHERE Email = ?", [$email]);
+            $user = $query->fetch(PDO::FETCH_ASSOC);
+
+            // Verify user exists and password is correct
+            if ($user && password_verify($password, $user['Wachtwoord'])) {
+                $_SESSION['user_id'] = $user['userID'];
+                $_SESSION['user_type'] = $user['Usertype'];
+                // header("Location: profiel.php"); // Redirect to profile page after login
+                header("location: index.php");
+                exit();
+            } else {
+                echo "Onjuiste inloggegevens.";
+            }
+        } catch (Exception $e) {
+            echo "Fout: " . $e->getMessage();
+        }
+    }
 }
-
-$naam = "Lebron james";
-$geboortedatum = "1980-05-15";
-$email = "lebronjamse@gmail.com";
-$telefoonnummer = "0612345678";
-$adres = "123 Main Street, Amsterdam";
-$beoordeling = 4.8;
-$specialisaties = "Orthodontist, lEdental";
-$beschrijving = "Experienced dentist specializing in orthodontics and cosmetic dentistry.";
-
-$sql = "INSERT INTO Tandarts (Naam, Geboortedarum, Telefoonnummer, Adres, Beoordeling, Specialisaties, Beschrijving)
-        VALUES ('$naam', '$geboortedatum', '$telefoonnummer', '$adres', '$beoordeling', '$specialisaties', '$beschrijving')";
-
-if ($conn->query($sql) !== TRUE) {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
-
-$conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="nl">

@@ -69,6 +69,16 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Afspraken` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+-- -----------------------------------------------------
+-- Table `Tandartsdb`.`Tijdsloten`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `Tijdsloten` (
+  `slotID` INT NOT NULL AUTO_INCREMENT,
+  `DatumTijd` DATETIME NOT NULL,
+  `Beschikbaar` BOOLEAN NOT NULL DEFAULT TRUE,
+  PRIMARY KEY (`slotID`)
+);
 
 -- -----------------------------------------------------
 -- Table `Tandartsdb`.`Behandelingen`

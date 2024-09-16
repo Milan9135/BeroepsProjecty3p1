@@ -26,7 +26,7 @@ if ($user['Usertype'] !== 'Patiënt') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afspraken - Tandartspraktijk</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./styles/Appointments.css">
 </head>
 <body>
     <div class="navbar">

@@ -8,8 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Vul alles in";
     } else {
         try {
-            $user->insertUser($_POST['email'], $_POST['wachtwoord']);
-            $toegevoegd = '<p>toegevoegd</p>';
+          // Wachtwoord hashen voordat het opgeslagen wordt
+          $hashedPassword = password_hash($_POST['wachtwoord'], PASSWORD_DEFAULT);
+            
+          // Gebruiker invoegen met het gehashte wachtwoord
+          $user->insertUser($_POST['email'], $hashedPassword);
+          $toegevoegd = '<p>Je bent succesvol geregistreerd!</p>';
         } catch (Exception $e) {
             'Error: ' . $e->getMessage();
         }
@@ -33,9 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
     <nav class="navbar">
-        <a href="index.html">Home</a>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
+        <a href="../homepage/indexs.html">Home</a>
+        <a href="../inlog/inlog.php">Login</a>
+        <a href="../register/register.php">Register</a>
     </nav>
 
     <main>
@@ -54,24 +58,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="password">Wachtwoord</label>
                     <input type="password" id="wachtwoord" name="wachtwoord" required />
                 </div>
-                <div class="input-group">
-                    <label for="confirmPassword">Bevestig Wachtwoord</label>
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        required />
-                </div>
+                
                 <button type="submit">Registreren</button>
 
 
                 <?php
 
                 if (isset($toegevoegd) && !empty($toegevoegd)) {
-                    echo '<p style="color: green; font-size: 1.5em;
+                    echo '<p style="color: black; font-size: 1.25em;
                                             font-weight: bold;
                                             text-align: center;
-                                            background-color: #f0f8f0;
+                                            margin-top: 20px;
                                             padding: 10px;
                                             border-radius: 8px;
                                             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
@@ -89,6 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p id="message"></p>
         </div>
     </main>
+
+
+    <footer class="footer">
+        <p>&copy; 2020 TandartsPlatform</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>

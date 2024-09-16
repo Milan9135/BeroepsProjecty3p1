@@ -9,10 +9,11 @@
 </head>
 
 <body>
+
     <nav class="navbar">
-        <a href="./indexs.html/">Home</a>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
+        <a href="../homepage/indexs.html">Home</a>
+        <a href="../inlog/inlog.php">Login</a>
+        <a href="../register/register.php">Register</a>
     </nav>
 
     <main>

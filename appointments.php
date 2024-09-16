@@ -1,4 +1,5 @@
 <?php
+include "db.php";
 session_start();
 include './Functions/appointmentsFunction.php';
 

@@ -29,6 +29,12 @@
             echo '<a href="register.php">Register</a>';
         }
         ?>
+        
+        <?php 
+        if (isset($_SESSION['user_id'])) {
+            echo '<a href="appointments.php">Afspraken</a>';
+        } 
+        ?>
 
     </nav>
     <header>

@@ -1,5 +1,5 @@
 <?php
-include '../db.php';
+
 $myDb = new DB("Tandartsdb");
 
 class Appointment

@@ -1,4 +1,5 @@
 <?php
+include "../db.php";
 session_start();
 include 'appointmentsFunction.php';
 
@@ -39,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afspraak Bevestiging</title>
-    <link rel="stylesheet" href="./styles/Appointments.css">
+    <link rel="stylesheet" href="../styles/Appointments.css">
 </head>
 <body>
     <div class="navbar">
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="register-container">
             <h2>Afspraak Bevestiging</h2>
             <p><?php echo isset($message) ? $message : ''; ?></p>
-            <a href="appointments.php">Terug naar afspraken</a>
+            <a href="../appointments.php">Terug naar afspraken</a>
         </div>
     </main>
 

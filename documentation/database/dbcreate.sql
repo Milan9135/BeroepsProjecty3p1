@@ -51,8 +51,9 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Tandarts` (
   `Specialisaties` VARCHAR(225) NULL,
   `Beschrijving` VARCHAR(225) NULL,
   `userID` INT, -- Foreign key naar de Users-tabel
+  FOREIGN KEY (`userID`) REFERENCES Users(`userID`) ON DELETE CASCADE,
   PRIMARY KEY (`tandartsID`));
-  FOREIGN KEY (`userID`) REFERENCES Users(`userID`) ON DELETE CASCADE
+  
 
 -- -----------------------------------------------------
 -- Table `Tandartsdb`.`Afspraken`

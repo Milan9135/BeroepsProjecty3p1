@@ -18,6 +18,10 @@ if ($user['Usertype'] !== 'Patiënt') {
     echo "Toegang geweigerd. Alleen patiënten kunnen een afspraak maken.";
     exit();
 }
+
+// Verkrijg beschikbare tijdsloten
+$appointment = new Appointment($myDb);
+$timeSlots = $appointment->getAvailableTimeSlots();
 ?>
 
 <!DOCTYPE html>
@@ -39,10 +43,16 @@ if ($user['Usertype'] !== 'Patiënt') {
     <main>
         <div class="register-container">
             <h2>Maak een afspraak</h2>
-            <form action="make_appointment.php" method="post">
+            <form action="./Functions/make_appointment.php" method="post">
                 <div class="input-group">
-                    <label for="date">Datum en tijd</label>
-                    <input type="datetime-local" id="date" name="date" required>
+                    <label for="slot">Beschikbaar tijdslot</label>
+                    <select id="slot" name="slot" required>
+                        <?php foreach ($timeSlots as $slot): ?>
+                            <option value="<?php echo $slot['slotID']; ?>">
+                                <?php echo $slot['DatumTijd']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="input-group">
                     <label for="reason">Beschrijving</label>

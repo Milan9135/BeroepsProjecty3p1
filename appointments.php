@@ -39,11 +39,23 @@ if ($user['Usertype'] !== 'Patiënt') {
 
     <main>
         <div class="register-container">
-            <h2>Selecteer Datum en Tijd</h2>
+            <h2>Selecteer een datum en tijd</h2>
             <form action="select_dentist.php" method="post">
                 <div class="input-group">
-                    <label for="datetime">Datum en Tijd</label>
-                    <input type="datetime-local" id="datetime" name="datetime" required>
+                    <label for="date">Datum</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="input-group">
+                    <label for="time">Tijd</label>
+                    <select id="time" name="time" required>
+                        <?php
+                        // Verkrijg tijdsloten voor de dag
+                        $timeSlots = $myDb->execute("SELECT DISTINCT Tijd FROM Tijdsloten")->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($timeSlots as $slot) {
+                            echo "<option value=\"{$slot['Tijd']}\">{$slot['Tijd']}</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
                 <button type="submit">Volgende</button>
             </form>

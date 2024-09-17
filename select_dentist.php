@@ -10,17 +10,28 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Verkrijg de geselecteerde datum en tijdstip
-$selectedDateTime = $_POST['datetime'];
+// Controleer of de ingelogde gebruiker een patiënt is
+$userId = $_SESSION['user_id'];
+$query = $myDb->execute("SELECT * FROM Users WHERE userID = ?", [$userId]);
+$user = $query->fetch(PDO::FETCH_ASSOC);
 
-// Verkrijg tandartsen die beschikbaar zijn op het geselecteerde tijdstip
-$query = $myDb->execute("
-    SELECT t.tandartsID, t.Naam 
-    FROM Tandarts t
-    JOIN Tijdsloten ts ON t.userID = ts.userID
-    WHERE ts.DatumTijd = ? AND ts.Beschikbaar = TRUE
-", [$selectedDateTime]);
-$tandartsen = $query->fetchAll(PDO::FETCH_ASSOC);
+if ($user['Usertype'] !== 'Patiënt') {
+    echo "Toegang geweigerd. Alleen patiënten kunnen een afspraak maken.";
+    exit();
+}
+
+// Verkrijg geselecteerde datum en tijd uit de POST-data
+$date = $_POST['date'];
+$time = $_POST['time'];
+
+// Verkrijg beschikbare tandartsen met tijdsloten
+$tandartsQuery = $myDb->execute("
+    SELECT DISTINCT t.tandartsID, t.Naam
+    FROM Tijdsloten tl
+    JOIN Tandarts t ON tl.userID = t.userID
+    WHERE tl.Tijd = ?", [$time]);
+
+$tandartsen = $tandartsQuery->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -41,20 +52,21 @@ $tandartsen = $query->fetchAll(PDO::FETCH_ASSOC);
 
     <main>
         <div class="register-container">
-            <h2>Kies een Tandarts</h2>
-            <form action="make_appointment.php" method="post">
-                <input type="hidden" name="datetime" value="<?php echo htmlspecialchars($selectedDateTime); ?>">
+            <h2>Kies een tandarts</h2>
+            <form action="./Functions/make_appointment.php" method="post">
+                <input type="hidden" name="date" value="<?php echo htmlspecialchars($date); ?>">
+                <input type="hidden" name="time" value="<?php echo htmlspecialchars($time); ?>">
                 <div class="input-group">
-                    <label for="tandarts">Tandarts</label>
-                    <select id="tandarts" name="tandarts" required>
-                        <?php foreach ($tandartsen as $tandarts): ?>
-                            <option value="<?php echo $tandarts['tandartsID']; ?>">
-                                <?php echo $tandarts['Naam']; ?>
+                    <label for="dentist">Tandarts</label>
+                    <select id="dentist" name="dentist" required>
+                        <?php foreach ($tandartsen as $dentist): ?>
+                            <option value="<?php echo $dentist['tandartsID']; ?>">
+                                <?php echo $dentist['Naam']; ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <button type="submit">Plan Afspraak</button>
+                <button type="submit">Maak Afspraak</button>
             </form>
         </div>
     </main>

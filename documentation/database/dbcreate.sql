@@ -60,16 +60,15 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Tandarts` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Afspraken` (
   `afspraakID` INT NOT NULL AUTO_INCREMENT,
-  `DatumTijd` DATETIME(6) NULL,
+  `Datum` DATE NOT NULL,
+  `Tijd` TIME NOT NULL,
   `Beschrijving` VARCHAR(225) NULL,
-  `userID` INT NOT NULL,
-  PRIMARY KEY (`afspraakID`),
-  CONSTRAINT `fk_Afspraken_Users`
-    FOREIGN KEY (`userID`)
-    REFERENCES `Tandartsdb`.`Users` (`userID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-
+  `userID` INT NOT NULL, -- Foreign key naar de Users-tabel
+  `tandartsID` INT NOT NULL, -- Foreign key naar de Tandarts-tabel
+  FOREIGN KEY (`userID`) REFERENCES Users(`userID`),
+  FOREIGN KEY (`tandartsID`) REFERENCES Tandarts(`tandartsID`),
+  PRIMARY KEY (`afspraakID`)
+);
 -- -----------------------------------------------------
 -- Table `Tandartsdb`.`Tijdsloten`
 -- -----------------------------------------------------
@@ -110,3 +109,5 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Verzekeringen` (
     REFERENCES `Tandartsdb`.`Users` (`userID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+

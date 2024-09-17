@@ -74,10 +74,11 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Afspraken` (
 -- Table `Tandartsdb`.`Tijdsloten`
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `Tijdsloten` (
+CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Tijdsloten` (
   `slotID` INT NOT NULL AUTO_INCREMENT,
-  `DatumTijd` DATETIME NOT NULL,
-  `Beschikbaar` BOOLEAN NOT NULL DEFAULT TRUE,
+  `Tijd` TIME NOT NULL,
+  `userID` INT NOT NULL, -- Foreign key naar de Tandarts-tabel
+  FOREIGN KEY (`userID`) REFERENCES Tandarts(`userID`) ON DELETE CASCADE,
   PRIMARY KEY (`slotID`)
 );
 

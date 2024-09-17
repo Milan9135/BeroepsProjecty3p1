@@ -1,5 +1,5 @@
 <?php
-include "db.php";
+include 'db.php';
 session_start();
 include './Functions/appointmentsFunction.php';
 
@@ -19,10 +19,6 @@ if ($user['Usertype'] !== 'Patiënt') {
     echo "Toegang geweigerd. Alleen patiënten kunnen een afspraak maken.";
     exit();
 }
-
-// Verkrijg beschikbare tijdsloten
-$appointment = new Appointment($myDb);
-$timeSlots = $appointment->getAvailableTimeSlots();
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +26,7 @@ $timeSlots = $appointment->getAvailableTimeSlots();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Afspraken - Tandartspraktijk</title>
+    <title>Selecteer Datum en Tijd - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/Appointments.css">
 </head>
 <body>
@@ -43,23 +39,13 @@ $timeSlots = $appointment->getAvailableTimeSlots();
 
     <main>
         <div class="register-container">
-            <h2>Maak een afspraak</h2>
-            <form action="./Functions/make_appointment.php" method="post">
+            <h2>Selecteer Datum en Tijd</h2>
+            <form action="select_dentist.php" method="post">
                 <div class="input-group">
-                    <label for="slot">Beschikbaar tijdslot</label>
-                    <select id="slot" name="slot" required>
-                        <?php foreach ($timeSlots as $slot): ?>
-                            <option value="<?php echo $slot['slotID']; ?>">
-                                <?php echo $slot['DatumTijd']; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                    <label for="datetime">Datum en Tijd</label>
+                    <input type="datetime-local" id="datetime" name="datetime" required>
                 </div>
-                <div class="input-group">
-                    <label for="reason">Beschrijving</label>
-                    <input type="text" id="reason" name="reason" required>
-                </div>
-                <button type="submit">Verzenden</button>
+                <button type="submit">Volgende</button>
             </form>
         </div>
     </main>

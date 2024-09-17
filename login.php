@@ -2,9 +2,12 @@
 session_start();
 include 'db.php';
 
-$myDb = new DB("Tandartsdb");
+// Include the User ckass
+include "objects/user.php";
 
-// Check if form is submitted
+$db = new DB("Tandartsdb");
+
+// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['wachtwoord'];
@@ -15,16 +18,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         try {
             // Prepare and execute query to find user
-            $query = $myDb->execute("SELECT * FROM users WHERE Email = ?", [$email]);
-            $user = $query->fetch(PDO::FETCH_ASSOC);
+            $query = "SELECT * FROM Users WHERE Email = ?";
+            $userResult = $db->select($query, [$email]);
 
-            // Verify user exists and password is correct
-            if ($user && password_verify($password, $user['Wachtwoord'])) {
-                $_SESSION['user_id'] = $user['userID'];
-                $_SESSION['user_type'] = $user['Usertype'];
-                // header("Location: profiel.php"); // Redirect to profile page after login
-                header("location: index.php");
-                exit();
+            // Check if a user was found
+            if (!empty($userResult)) {
+                $user = $userResult[0];  // Get the first result
+
+                // Verify if the password is correct
+                if (password_verify($password, $user['Wachtwoord'])) {
+                    $_SESSION['user_id'] = $user['userID'];
+                    $_SESSION['user_type'] = $user['Usertype'];
+
+                    // Get user data based on Usertype
+                    $userType = $user['Usertype'];
+
+                    // Based on Usertype, fetch relevant details
+                    $extraData = null;
+                    if ($userType == 'Patiënt') {
+                        $query = "SELECT p.*, u.Email, u.Usertype 
+                        FROM Patiënt p 
+                        JOIN Users u ON p.userID = u.userID 
+                        WHERE p.userID = ?";
+                        $extraData = $db->select($query, [$user['userID']])[0];
+                    } elseif ($userType == 'Tandarts') {
+                        $query = "SELECT t.*, u.Email, u.Usertype 
+                        FROM Tandarts t 
+                        JOIN Users u ON t.userID = u.userID 
+                        WHERE t.userID = ?";
+                        $extraData = $db->select($query, [$user['userID']])[0];
+                    }
+
+                    // Create a new User object with the additional data
+                    $userObject = new User(
+                        $user['userID'],
+                        $user['Email'],
+                        $user['Usertype'],
+                        $extraData
+                    );
+
+                    // Store the User object in the session
+                    $_SESSION['userData'] = $userObject;
+
+                    // Redirect to index.php after successful login
+                    header("Location: index.php");
+                    exit();
+                } else {
+                    echo "Onjuiste inloggegevens.";
+                }
             } else {
                 echo "Onjuiste inloggegevens.";
             }
@@ -38,18 +79,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/tand.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-<nav class="navbar">
+    <nav class="navbar">
         <a href="index.php">Home</a>
 
-        
-        <?php 
+
+        <?php
         if (isset($_SESSION['user_id'])) {
             echo '<a href="logout.php">Logout</a>';
         } else {
@@ -57,18 +100,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         ?>
 
-        <?php 
+        <?php
         if (isset($_SESSION['user_id'])) {
             echo '<a href="profiel.php">Mijn account</a>';
         } else {
             echo '<a href="register.php">Register</a>';
         }
         ?>
-        
-        <?php 
+
+        <?php
         if (isset($_SESSION['user_id'])) {
             echo '<a href="appointments.php">Afspraken</a>';
-        } 
+        }
         ?>
 
     </nav>
@@ -97,4 +140,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,3 +1,15 @@
+<?php 
+
+include 'objects/user.php';
+
+session_start();
+
+
+$user = $_SESSION['userData'];
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,15 +17,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TandartsPlatform</title>
-    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/tand.css" />
     <link rel="stylesheet" href="styles/article_styling.css">
 </head>
 
+<style>
+    header {
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+    }
+</style>
+
 <body>
     
-    <nav class="navbar">
+<nav class="navbar">
         <a href="index.php">Home</a>
 
+        
         <?php 
         if (isset($_SESSION['user_id'])) {
             echo '<a href="logout.php">Logout</a>';
@@ -38,7 +59,16 @@
 
     </nav>
     <header>
-        <h1>TandartsPlatform?</h1>
+        <h1>TandartsPlatform</h1>
+        <?php
+            if (isset($_SESSION['user_id'])) {
+                if ($user->usertype == 'Patiënt') {
+                    echo "<h2>Welkom, " . $user->patient->name . "</h2>";
+                } else {
+                    echo "<h2>Welkom, " . $user->tandarts->name . "</h2>";
+                }
+            }
+        ?>
     </header>
 
     <main>

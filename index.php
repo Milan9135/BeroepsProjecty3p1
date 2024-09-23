@@ -25,35 +25,6 @@ $user = $_SESSION['userData'];
         flex-direction: column;
         place-items: center;
     }
-
-    .button-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .appointment-button {
-        background-color: #4CAF50;
-        color: white;
-        padding: 14px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-    .appointment-button:hover {
-        background-color: #45a049;
-    }
-
-    .description-text {
-        text-align: center;
-        margin-top: 10px;
-        font-size: 18px;
-        color: #555;
-    }
 </style>
 
 <body>

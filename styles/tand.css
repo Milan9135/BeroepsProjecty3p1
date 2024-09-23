@@ -121,6 +121,30 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #e94560;
 }
+/* Styling for the appointment button */
+.appointment-button {
+    background-color: #4CAF50; /* Groene achtergrondkleur */
+    color: white; /* Witte tekstkleur */
+    padding: 14px 20px; /* Opvulling rondom de tekst */
+    text-align: center; /* Tekst centreren */
+    text-decoration: none; /* Geen onderstreping */
+    display: inline-block; /* Weergave als inline-block */
+    font-size: 16px; /* Tekstgrootte */
+    border-radius: 5px; /* Ronde hoeken */
+    transition: background-color 0.3s ease; /* Transitie-effect voor achtergrondkleur */
+}
+
+.appointment-button:hover {
+    background-color: #45a049; /* Donkerdere groen bij hover */
+}
+
+/* Button-container stijl */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 
 /* Animations */
 @keyframes fadeIn {

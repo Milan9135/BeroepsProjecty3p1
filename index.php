@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include 'objects/user.php';
 
@@ -30,12 +30,12 @@ $user = $_SESSION['userData'];
 </style>
 
 <body>
-    
-<nav class="navbar">
+
+    <nav class="navbar">
         <a href="index.php">Home</a>
 
-        
-        <?php 
+
+        <?php
         if (isset($_SESSION['user_id'])) {
             echo '<a href="logout.php">Logout</a>';
         } else {
@@ -43,31 +43,31 @@ $user = $_SESSION['userData'];
         }
         ?>
 
-        <?php 
+        <?php
         if (isset($_SESSION['user_id'])) {
             echo '<a href="profiel.php">Mijn account</a>';
         } else {
             echo '<a href="register.php">Register</a>';
         }
         ?>
-        
-        <?php 
+
+        <?php
         if (isset($_SESSION['user_id'])) {
             echo '<a href="appointments.php">Afspraken</a>';
-        } 
+        }
         ?>
 
     </nav>
     <header>
-        <h1>TandartsPlatform</h1>
+        <h1>LEDental</h1>
         <?php
-            if (isset($_SESSION['user_id'])) {
-                if ($user->usertype == 'Patiënt') {
-                    echo "<h2>Welkom, " . $user->patient->name . "</h2>";
-                } else {
-                    echo "<h2>Welkom, " . $user->tandarts->name . "</h2>";
-                }
+        if (isset($_SESSION['user_id'])) {
+            if ($user->usertype == 'Patiënt') {
+                echo "<h2>Welkom, " . $user->patient->name . "</h2>";
+            } else {
+                echo "<h2>Welkom, " . $user->tandarts->name . "</h2>";
             }
+        }
         ?>
     </header>
 

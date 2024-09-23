@@ -50,7 +50,6 @@ INSERT INTO Behandelingen (userID, Beschrijving) VALUES
 
 -- Behandelingen voor John Smith
 (2, 'Orthodontie'),  
-(2, 'Vulling'),
 
 -- Behandelingen voor Jane Doe
 (3, 'Cosmetische Tandheelkunde'),  
@@ -58,4 +57,3 @@ INSERT INTO Behandelingen (userID, Beschrijving) VALUES
 
 -- Behandelingen voor Alice Johnson
 (4, 'Preventieve Tandheelkunde'),  
-(4, 'Controle');

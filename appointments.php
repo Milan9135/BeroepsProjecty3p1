@@ -44,7 +44,7 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
             <form action="select_dentist.php" method="post">
                 <div class="input-group">
                     <label for="date">Datum</label>
-                    <input type="date" id="date" name="date" required>
+                    <input type="date" id="date" name="date" required min="">
                 </div>
                 <div class="input-group">
                     <label for="treatment">Behandeling</label>
@@ -65,5 +65,11 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
     <div class="footer">
         <p>&copy; 2024 Tandartspraktijk. Alle rechten voorbehouden.</p>
     </div>
+
+    <script>
+        // Stel de minimale waarde van het datumveld in op vandaag
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
+    </script>
 </body>
 </html>

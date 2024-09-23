@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include 'objects/user.php';
 
@@ -10,7 +10,6 @@ if (isset($_SESSION['user_id'])) {
 
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +28,35 @@ if (isset($_SESSION['user_id'])) {
         flex-direction: column;
         place-items: center;
     }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .appointment-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .appointment-button:hover {
+        background-color: #45a049;
+    }
+
+    .description-text {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 18px;
+        color: #555;
+    }
 </style>
 
 <body>
@@ -46,7 +74,7 @@ if (isset($_SESSION['user_id'])) {
     <?php endif; ?>
 </nav>
     <header>
-        <h1>TandartsPlatform</h1>
+        <h1>LEDental</h1>
         <?php
             if (isset($_SESSION['user_id'])) {
                 if ($user->usertype == 'Patiënt') {
@@ -73,16 +101,17 @@ if (isset($_SESSION['user_id'])) {
                 </p>
             </article>
 
+            <!-- Aangepast artikel met een knop -->
             <article>
-                <h2>Transparante afspraken en betrouwbare tandartsen</h2>
-                <p>
-                    We begrijpen hoe belangrijk het is om een tandarts te kiezen waar je
-                    je prettig bij voelt. Daarom biedt Dentist Platform gedetailleerde
-                    profielen van tandartsen, inclusief ervaring, specialisaties en
-                    beoordelingen van patiënten. Zo kun je met vertrouwen een afspraak
-                    maken, wetende dat je in goede handen bent. Geen verrassingen,
-                    alleen heldere afspraken en betrouwbare zorg.
+                <h2>Maak een afspraak vandaag nog</h2>
+                <p class="description-text">
+                    Klik op de onderstaande knop om eenvoudig en snel een afspraak te maken
+                    met een van onze ervaren tandartsen. Wij zorgen voor een zorgeloze en betrouwbare
+                    ervaring van begin tot eind.
                 </p>
+                <div class="button-container">
+                    <a href="appointments.php" class="appointment-button">Afspraak maken</a>
+                </div>
             </article>
 
             <article>

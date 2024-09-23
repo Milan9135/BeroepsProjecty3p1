@@ -1,7 +1,6 @@
 <?php
 include 'db.php';
 session_start();
-include './Functions/appointmentsFunction.php';
 
 $myDb = new DB("Tandartsdb");
 
@@ -20,18 +19,37 @@ if ($user['Usertype'] !== 'Patiënt') {
     exit();
 }
 
-// Verkrijg geselecteerde datum en tijd uit de POST-data
-$date = $_POST['date'];
-$time = $_POST['time'];
+if (!isset($_POST['date']) || !isset($_POST['treatment'])) {
+    header('Location: appointments.php');
+    exit();
+}
 
-// Verkrijg beschikbare tandartsen met tijdsloten
-$tandartsQuery = $myDb->execute("
+$selectedDate = $_POST['date'];
+$selectedTreatmentDescription = $_POST['treatment'];
+
+// Verkrijg de behandeling-ID op basis van de beschrijving
+$treatmentQuery = $myDb->execute("SELECT BehandelingenID FROM Behandelingen WHERE Beschrijving = ?", [$selectedTreatmentDescription]);
+$treatment = $treatmentQuery->fetch(PDO::FETCH_ASSOC);
+$selectedTreatmentID = $treatment ? $treatment['BehandelingenID'] : null;
+
+// Controleer of de behandeling bestaat
+if (!$selectedTreatmentID) {
+    die("Fout: De behandeling met de beschrijving '$selectedTreatmentDescription' bestaat niet.");
+}
+
+// Verkrijg tandartsen die de geselecteerde behandeling aanbieden
+$tandartsen = $myDb->execute("
     SELECT DISTINCT t.tandartsID, t.Naam
-    FROM Tijdsloten tl
-    JOIN Tandarts t ON tl.userID = t.userID
-    WHERE tl.Tijd = ?", [$time]);
+    FROM Tandarts t
+    JOIN Behandelingen b ON t.userID = b.userID
+    WHERE b.BehandelingenID = ?", [$selectedTreatmentID])->fetchAll(PDO::FETCH_ASSOC);
 
-$tandartsen = $tandartsQuery->fetchAll(PDO::FETCH_ASSOC);
+// Verkrijg tijdsloten voor de geselecteerde tandarts
+$tandartsID = isset($_POST['dentist']) ? $_POST['dentist'] : null;
+$tijdsloten = [];
+if ($tandartsID) {
+    $tijdsloten = $myDb->execute("SELECT Tijd FROM Tijdsloten WHERE userID = ?", [$tandartsID])->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,35 +57,60 @@ $tandartsen = $tandartsQuery->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kies Tandarts - Tandartspraktijk</title>
+    <title>Selecteer Tandarts en Tijdslot - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/Appointments.css">
 </head>
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
-        <a href="appointments.php">Afspraken</a>
+        <a href="afspraak_annuleren.php">Afspraken</a>
         <a href="profiel.php">Mijn account</a>
         <a href="logout.php">Logout</a>
     </div>
 
     <main>
         <div class="register-container">
-            <h2>Kies een tandarts</h2>
-            <form action="./Functions/make_appointment.php" method="post">
-                <input type="hidden" name="date" value="<?php echo htmlspecialchars($date); ?>">
-                <input type="hidden" name="time" value="<?php echo htmlspecialchars($time); ?>">
+            <h2>Selecteer een tandarts en tijdslot</h2>
+            <form action="select_dentist.php" method="post">
+                <input type="hidden" name="date" value="<?php echo htmlspecialchars($selectedDate); ?>">
+                <input type="hidden" name="treatment" value="<?php echo htmlspecialchars($selectedTreatmentDescription); ?>">
+                <input type="hidden" name="treatmentID" value="<?php echo htmlspecialchars($selectedTreatmentID); ?>"> <!-- Voeg dit toe -->
+                
                 <div class="input-group">
-                    <label for="dentist">Tandarts</label>
-                    <select id="dentist" name="dentist" required>
-                        <?php foreach ($tandartsen as $dentist): ?>
-                            <option value="<?php echo $dentist['tandartsID']; ?>">
-                                <?php echo $dentist['Naam']; ?>
+                    <label for="dentist">Kies een tandarts:</label>
+                    <select id="dentist" name="dentist" onchange="this.form.submit()" required>
+                        <option value="">Selecteer een tandarts</option>
+                        <?php foreach ($tandartsen as $tandarts): ?>
+                            <option value="<?php echo htmlspecialchars($tandarts['tandartsID']); ?>" <?php echo ($tandartsID == $tandarts['tandartsID']) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($tandarts['Naam']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <button type="submit">Maak Afspraak</button>
             </form>
+
+            <?php if ($tandartsID): ?>
+                <form action="./Functions/make_appointment.php" method="post">
+                    <input type="hidden" name="date" value="<?php echo htmlspecialchars($selectedDate); ?>">
+                    <input type="hidden" name="dentist" value="<?php echo htmlspecialchars($tandartsID); ?>">
+                    <input type="hidden" name="treatment" value="<?php echo htmlspecialchars($selectedTreatmentDescription); ?>">
+                    <input type="hidden" name="treatmentID" value="<?php echo htmlspecialchars($selectedTreatmentID); ?>"> <!-- Voeg dit toe -->
+
+                    <div class="input-group">
+                        <label for="time">Kies een tijdslot:</label>
+                        <select id="time" name="time" required>
+                            <option value="">Selecteer een tijdslot</option>
+                            <?php foreach ($tijdsloten as $slot): ?>
+                                <option value="<?php echo htmlspecialchars($slot['Tijd']); ?>">
+                                    <?php echo htmlspecialchars($slot['Tijd']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <button type="submit">Maak Afspraak</button>
+                </form>
+            <?php endif; ?>
         </div>
     </main>
 

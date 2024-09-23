@@ -33,7 +33,7 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
-        <a href="appointments.php">Afspraken</a>
+        <a href="afspraak_annuleren.php">Afspraken</a>
         <a href="profiel.php">Mijn account</a>
         <a href="logout.php">Logout</a>
     </div>

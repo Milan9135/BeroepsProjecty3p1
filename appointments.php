@@ -24,14 +24,16 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
 ?>
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selecteer Datum - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/Appointments.css">
 </head>
+
 <body>
-    <div class="navbar">
+    <nav class="navbar">
         <a href="index.php">Home</a>
         <a href="afspraak_annuleren.php">Afspraken</a>
         <a href="profiel.php">Mijn account</a>
@@ -72,4 +74,5 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
         document.getElementById('date').setAttribute('min', today);
     </script>
 </body>
+
 </html>

@@ -21,12 +21,12 @@
     margin-right: 5px;
     font-family: 'Poppins', sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 5px;
 }
 
 .navbar a:hover {
     background: #e94560;
     color: white;
-    border-radius: 5px;
 }
 
 /* Footer styling */

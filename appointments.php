@@ -23,19 +23,27 @@ if ($user['Usertype'] !== 'Patiënt') {
 
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selecteer Datum en Tijd - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/Appointments.css">
 </head>
+
 <body>
-    <div class="navbar">
+    <nav class="navbar">
         <a href="index.php">Home</a>
-        <a href="appointments.php">Afspraken</a>
-        <a href="profiel.php">Mijn account</a>
-        <a href="logout.php">Logout</a>
-    </div>
+
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="logout.php">Logout</a>
+            <a href="profile.php">Profiel</a> <!-- Add this link to go to the profile page -->
+            <a href="appointments.php">Afspraken</a>
+        <?php else: ?>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
+        <?php endif; ?>
+    </nav>
 
     <main>
         <div class="register-container">
@@ -66,4 +74,5 @@ if ($user['Usertype'] !== 'Patiënt') {
         <p>&copy; 2024 Tandartspraktijk. Alle rechten voorbehouden.</p>
     </div>
 </body>
+
 </html>

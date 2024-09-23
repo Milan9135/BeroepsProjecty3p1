@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Patiënt` (
 CREATE TABLE IF NOT EXISTS `Tandartsdb`.`Tandarts` (
   `tandartsID` INT NOT NULL AUTO_INCREMENT,
   `Naam` VARCHAR(225) NULL,
-  `Geboortedarum` VARCHAR(225) NULL,
+  `Geboortedatum` VARCHAR(225) NULL,
   `Telefoonnummer` VARCHAR(12) NULL,
   `Adres` VARCHAR(225) NULL,
   `Beoordeling` FLOAT NULL,

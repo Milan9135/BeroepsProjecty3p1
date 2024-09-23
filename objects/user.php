@@ -4,7 +4,7 @@ class User {
     public $id;
     public $email;
     public $usertype;
-    public $patient;  // Holds a Patiënt object if user is a patiënt
+    public $patiënt;  // Holds a Patiënt object if user is a patiënt
     public $tandarts; // Holds a Tandarts object if user is a tandarts
 
     public function __construct($id, $email, $usertype, $extraData = null) {
@@ -14,7 +14,7 @@ class User {
 
         // Automatically assign properties based on the usertype
         if ($usertype == 'Patiënt' && $extraData) {
-            $this->patient = new Patiënt(
+            $this->patiënt = new Patiënt(
                 $extraData['PatiëntID'],
                 $extraData['Naam'],
                 $extraData['Geboortedatum'],
@@ -39,14 +39,14 @@ class User {
 }
 
 class Patiënt {
-    public $patientID;
+    public $patiëntID;
     public $name;
     public $birthdate;
     public $phone;
     public $address;
 
     public function __construct($patientID, $name, $birthdate, $phone, $address) {
-        $this->patientID = $patientID;
+        $this->patiëntID = $patientID;
         $this->name = $name;
         $this->birthdate = $birthdate;
         $this->phone = $phone;

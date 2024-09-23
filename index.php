@@ -4,8 +4,10 @@ include 'objects/user.php';
 
 session_start();
 
+if (isset($_SESSION['user_id'])) {
+    $user = $_SESSION['userData'];
+}
 
-$user = $_SESSION['userData'];
 
 ?>
 
@@ -32,39 +34,24 @@ $user = $_SESSION['userData'];
 <body>
     
 <nav class="navbar">
-        <a href="index.php">Home</a>
+    <a href="index.php">Home</a>
 
-        
-        <?php 
-        if (isset($_SESSION['user_id'])) {
-            echo '<a href="logout.php">Logout</a>';
-        } else {
-            echo '<a href="login.php">Login</a>';
-        }
-        ?>
-
-        <?php 
-        if (isset($_SESSION['user_id'])) {
-            echo '<a href="profiel.php">Mijn account</a>';
-        } else {
-            echo '<a href="register.php">Register</a>';
-        }
-        ?>
-        
-        <?php 
-        if (isset($_SESSION['user_id'])) {
-            echo '<a href="appointments.php">Afspraken</a>';
-        } 
-        ?>
-
-    </nav>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="logout.php">Logout</a>
+        <a href="profile.php">Profiel</a> <!-- Add this link to go to the profile page -->
+        <a href="appointments.php">Afspraken</a>
+    <?php else: ?>
+        <a href="login.php">Login</a>
+        <a href="register.php">Register</a>
+    <?php endif; ?>
+</nav>
     <header>
         <h1>TandartsPlatform</h1>
         <?php
             if (isset($_SESSION['user_id'])) {
                 if ($user->usertype == 'Patiënt') {
-                    echo "<h2>Welkom, " . $user->patient->name . "</h2>";
-                } else {
+                    echo "<h2>Welkom, " . $user->patiënt->name . "</h2>";
+                } elseif ($user->usertype == 'Tandarts') {
                     echo "<h2>Welkom, " . $user->tandarts->name . "</h2>";
                 }
             }

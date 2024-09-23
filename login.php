@@ -37,16 +37,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $extraData = null;
                     if ($userType == 'Patiënt') {
                         $query = "SELECT p.*, u.Email, u.Usertype 
-                        FROM Patiënt p 
-                        JOIN Users u ON p.userID = u.userID 
+                        FROM Tandartsdb.Patiënt p 
+                        JOIN Tandartsdb.Users u ON p.userID = u.userID 
                         WHERE p.userID = ?";
-                        $extraData = $db->select($query, [$user['userID']])[0];
+                        $extraData = $db->select($query, [$user['userID']]);
+
+                        if (!empty($extraData)) {
+                            $extraData = $extraData[0];
+                        } else {
+                            echo "no extra data for patient. ";
+                        }
                     } elseif ($userType == 'Tandarts') {
                         $query = "SELECT t.*, u.Email, u.Usertype 
-                        FROM Tandarts t 
-                        JOIN Users u ON t.userID = u.userID 
-                        WHERE t.userID = ?";
-                        $extraData = $db->select($query, [$user['userID']])[0];
+                        FROM Tandartsdb.Tandarts t 
+                        JOIN Tandartsdb.Users u ON t.userID = u.userID;";
+                        $extraData = $db->select($query, [$user['userID']]);
+
+                        if (!empty($extraData)) {
+                            $extraData = $extraData[0];
+                        } else {
+                            echo "no extra data for tandarts. ";
+                        }
                     }
 
                     // Create a new User object with the additional data
@@ -91,29 +102,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <nav class="navbar">
         <a href="index.php">Home</a>
 
-
-        <?php
-        if (isset($_SESSION['user_id'])) {
-            echo '<a href="logout.php">Logout</a>';
-        } else {
-            echo '<a href="login.php">Login</a>';
-        }
-        ?>
-
-        <?php
-        if (isset($_SESSION['user_id'])) {
-            echo '<a href="profiel.php">Mijn account</a>';
-        } else {
-            echo '<a href="register.php">Register</a>';
-        }
-        ?>
-
-        <?php
-        if (isset($_SESSION['user_id'])) {
-            echo '<a href="appointments.php">Afspraken</a>';
-        }
-        ?>
-
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="logout.php">Logout</a>
+            <a href="profile.php">Profiel</a> <!-- Add this link to go to the profile page -->
+            <a href="appointments.php">Afspraken</a>
+        <?php else: ?>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
+        <?php endif; ?>
     </nav>
 
     <main>

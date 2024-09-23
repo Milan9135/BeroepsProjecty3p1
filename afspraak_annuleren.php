@@ -14,13 +14,13 @@ $userId = $_SESSION['user_id'];
 
 // Haal de gemaakte afspraken van de patiënt op
 $afsprakenQuery = $myDb->execute("
-    SELECT A.afspraakID, A.afspraakDatum, A.afspraakTijd, B.Beschrijving AS behandeling, U.naam AS dokter
+    SELECT A.afspraakID, A.Datum AS afspraakDatum, A.Tijd AS afspraakTijd, B.Beschrijving AS behandeling, T.Naam AS tandarts
     FROM Afspraken A
-    JOIN Behandelingen B ON A.behandelingID = B.behandelingID
-    JOIN Users U ON A.dokterID = U.userID
+    JOIN Behandelingen B ON A.BehandelingenID = B.BehandelingenID
+    JOIN Tandarts T ON A.tandartsID = T.tandartsID
     WHERE A.userID = ?
     AND A.geannuleerd = 0
-    ORDER BY A.afspraakDatum ASC, A.afspraakTijd ASC
+    ORDER BY A.Datum ASC, A.Tijd ASC
 ", [$userId]);
 
 $afspraken = $afsprakenQuery->fetchAll(PDO::FETCH_ASSOC);
@@ -64,7 +64,7 @@ if (isset($_POST['cancel_appointment'])) {
                             <th>Datum</th>
                             <th>Tijd</th>
                             <th>Behandeling</th>
-                            <th>Dokter</th>
+                            <th>Tandarts</th>
                             <th>Actie</th>
                         </tr>
                     </thead>
@@ -74,7 +74,7 @@ if (isset($_POST['cancel_appointment'])) {
                                 <td><?php echo htmlspecialchars($afspraak['afspraakDatum']); ?></td>
                                 <td><?php echo htmlspecialchars($afspraak['afspraakTijd']); ?></td>
                                 <td><?php echo htmlspecialchars($afspraak['behandeling']); ?></td>
-                                <td><?php echo htmlspecialchars($afspraak['dokter']); ?></td>
+                                <td><?php echo htmlspecialchars($afspraak['tandarts']); ?></td>
                                 <td>
                                     <form action="afspraak_annuleren.php" method="post">
                                         <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">

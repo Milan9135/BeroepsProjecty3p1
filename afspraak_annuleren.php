@@ -44,7 +44,7 @@ if (isset($_POST['cancel_appointment'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mijn Afspraken - Tandartspraktijk</title>
-    <link rel="stylesheet" href="./styles/Appointments.css">
+    <link rel="stylesheet" href="./styles/afspraak-annuleren.css">
 </head>
 <body>
     <div class="navbar">
@@ -89,8 +89,16 @@ if (isset($_POST['cancel_appointment'])) {
                 <p>Je hebt geen toekomstige afspraken.</p>
             <?php endif; ?>
         </div>
-    </main>
 
+
+
+        
+    </main>
+<div class="button-container">
+
+
+<a href="appointments.php"> Afrpaak maken</a>
+</div>
     <div class="footer">
         <p>&copy; 2024 Tandartspraktijk. Alle rechten voorbehouden.</p>
     </div>

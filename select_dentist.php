@@ -32,6 +32,11 @@ $treatmentQuery = $myDb->execute("SELECT BehandelingenID FROM Behandelingen WHER
 $treatment = $treatmentQuery->fetch(PDO::FETCH_ASSOC);
 $selectedTreatmentID = $treatment ? $treatment['BehandelingenID'] : null;
 
+// Controleer of de behandeling bestaat
+if (!$selectedTreatmentID) {
+    die("Fout: De behandeling met de beschrijving '$selectedTreatmentDescription' bestaat niet.");
+}
+
 // Verkrijg tandartsen die de geselecteerde behandeling aanbieden
 $tandartsen = $myDb->execute("
     SELECT DISTINCT t.tandartsID, t.Naam
@@ -69,6 +74,7 @@ if ($tandartsID) {
             <form action="select_dentist.php" method="post">
                 <input type="hidden" name="date" value="<?php echo htmlspecialchars($selectedDate); ?>">
                 <input type="hidden" name="treatment" value="<?php echo htmlspecialchars($selectedTreatmentDescription); ?>">
+                <input type="hidden" name="treatmentID" value="<?php echo htmlspecialchars($selectedTreatmentID); ?>"> <!-- Voeg dit toe -->
                 
                 <div class="input-group">
                     <label for="dentist">Kies een tandarts:</label>
@@ -88,6 +94,7 @@ if ($tandartsID) {
                     <input type="hidden" name="date" value="<?php echo htmlspecialchars($selectedDate); ?>">
                     <input type="hidden" name="dentist" value="<?php echo htmlspecialchars($tandartsID); ?>">
                     <input type="hidden" name="treatment" value="<?php echo htmlspecialchars($selectedTreatmentDescription); ?>">
+                    <input type="hidden" name="treatmentID" value="<?php echo htmlspecialchars($selectedTreatmentID); ?>"> <!-- Voeg dit toe -->
 
                     <div class="input-group">
                         <label for="time">Kies een tijdslot:</label>

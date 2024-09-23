@@ -59,6 +59,12 @@ main {
     margin-top: 100px;
 }
 
+header {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+}
+
 /* Container Styling */
 .register-container {
     background-color: #fff;

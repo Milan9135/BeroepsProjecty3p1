@@ -22,14 +22,6 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="styles/article_styling.css">
 </head>
 
-<style>
-    header {
-        display: flex;
-        flex-direction: column;
-        place-items: center;
-    }
-</style>
-
 <body>
     
 <nav class="navbar">

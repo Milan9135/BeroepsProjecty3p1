@@ -101,3 +101,31 @@ button[type="submit"] {
     border: none;
     padding: 1
 }
+
+
+.appointment-button {
+
+    background-color: #000000; /* Groene achtergrondkleur */
+    color: white; /* Witte tekstkleur */
+    padding: 14px 20px; /* Opvulling rondom de tekst */
+    text-align: center; /* Tekst centreren */
+  text-decoration: none;
+width: 200px;
+    font-size: 16px; /* Tekstgrootte */
+    border-radius: 5px; /* Ronde hoeken */
+    transition: background-color 0.3s ease; /* Transitie-effect voor achtergrondkleur */
+}
+
+#conobomama{
+    margin-left: 830px;
+}
+#yh{
+    text-decoration: none;
+    color: white;
+}
+
+
+.appointment-button:hover {
+    background-color: #1a6aa0; /* Donkerdere groen bij hover */
+}
+

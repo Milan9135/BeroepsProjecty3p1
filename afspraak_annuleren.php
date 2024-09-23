@@ -86,19 +86,20 @@ if (isset($_POST['cancel_appointment'])) {
                     </tbody>
                 </table>
             <?php else: ?>
+
+
+        
                 <p>Je hebt geen toekomstige afspraken.</p>
             <?php endif; ?>
         </div>
 
 
-
-        
     </main>
-<div class="button-container">
+<div class="appointment-button"id="conobomama">
 
-
-<a href="appointments.php"> Afrpaak maken</a>
+<a href="./appointments.php" id="yh"> Afspraak maken</a>
 </div>
+
     <div class="footer">
         <p>&copy; 2024 Tandartspraktijk. Alle rechten voorbehouden.</p>
     </div>

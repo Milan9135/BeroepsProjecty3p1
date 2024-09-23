@@ -123,7 +123,7 @@ button[type="submit"]:hover {
 }
 /* Styling for the appointment button */
 .appointment-button {
-    background-color: #4CAF50; /* Groene achtergrondkleur */
+    background-color: #1a1a2e; /* Groene achtergrondkleur */
     color: white; /* Witte tekstkleur */
     padding: 14px 20px; /* Opvulling rondom de tekst */
     text-align: center; /* Tekst centreren */
@@ -135,7 +135,7 @@ button[type="submit"]:hover {
 }
 
 .appointment-button:hover {
-    background-color: #45a049; /* Donkerdere groen bij hover */
+    background-color: #1a6aa0; /* Donkerdere groen bij hover */
 }
 
 /* Button-container stijl */

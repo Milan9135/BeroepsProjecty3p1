@@ -23,9 +23,9 @@ if ($user['Usertype'] !== 'Patiënt') {
 $date = $_POST['date'];
 $time = $_POST['time'];
 $tandartsID = $_POST['dentist'];
-$treatmentID = $_POST['treatment'];
+$treatmentID = $_POST['treatmentID']; // Gebruik treatmentID hier
 
-// Verkrijg de behandeling beschrijving
+// Verkrijg de behandeling beschrijving (optioneel, als je het wilt gebruiken)
 $treatmentQuery = $myDb->execute("SELECT Beschrijving FROM Behandelingen WHERE BehandelingenID = ?", [$treatmentID]);
 $treatment = $treatmentQuery->fetch(PDO::FETCH_ASSOC);
 
@@ -35,8 +35,8 @@ $tandarts = $tandartsQuery->fetch(PDO::FETCH_ASSOC);
 $tandartsNaam = $tandarts['Naam'];
 
 // Voeg de afspraak toe aan de database
-$myDb->execute("INSERT INTO Afspraken (Datum, Tijd, Beschrijving, userID, tandartsID) VALUES (?, ?, ?, ?, ?)",
-    [$date, $time, $treatment, $userId, $tandartsID]);
+$myDb->execute("INSERT INTO Afspraken (Datum, Tijd, BehandelingenID, userID, tandartsID) VALUES (?, ?, ?, ?, ?)",
+    [$date, $time, $treatmentID, $userId, $tandartsID]);
 ?>
 
 <!DOCTYPE html>

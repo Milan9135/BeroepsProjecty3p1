@@ -22,14 +22,6 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="styles/article_styling.css">
 </head>
 
-<style>
-    header {
-        display: flex;
-        flex-direction: column;
-        place-items: center;
-    }
-</style>
-
 <body>
     
 <nav class="navbar">
@@ -38,7 +30,7 @@ if (isset($_SESSION['user_id'])) {
     <?php if (isset($_SESSION['user_id'])): ?>
         <a href="logout.php">Logout</a>
         <a href="profile.php">Profiel</a> <!-- Add this link to go to the profile page -->
-        <a href="appointments.php">Afspraken</a>
+        <a href="afspraak_annuleren.php">Afspraken</a>
     <?php else: ?>
         <a href="login.php">Login</a>
         <a href="register.php">Register</a>

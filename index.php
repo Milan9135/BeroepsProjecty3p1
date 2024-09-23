@@ -79,7 +79,7 @@ $user = $_SESSION['userData'];
 
         <?php
         if (isset($_SESSION['user_id'])) {
-            echo '<a href="appointments.php">Afspraken</a>';
+            echo '<a href="afspraak_annuleren.php">Afspraken</a>';
         }
         ?>
 

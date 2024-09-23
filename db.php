@@ -9,7 +9,7 @@ class DB
     protected $stmt;
     // huidige statement
 
-    public function __construct($db = "dbTandarts", $host = "localhost:3307", $user = "root", $pass = "")
+    public function __construct($db = "dbTandarts", $host = "localhost", $user = "root", $pass = "")
     {
         try {
             $this->dbh = new PDO("mysql:host=$host; dbname=$db;", $user, $pass);

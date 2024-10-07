@@ -29,15 +29,22 @@ $selectedTime = $_POST['time'];
 $selectedTreatmentID = $_POST['treatmentID'];
 $appointmentID = $_POST['appointmentID'];
 
+// Verkrijg de beschrijving van de behandeling op basis van de behandelingID
+$treatmentDescriptionQuery = $myDb->execute("SELECT Beschrijving FROM Behandelingen WHERE BehandelingenID = ?", [$selectedTreatmentID]);
+$treatmentDescription = $treatmentDescriptionQuery->fetchColumn(); // Haalt de beschrijving op
+
+echo $treatmentDescription;
+
 // Update de afspraak met de nieuwe gegevens
 $updateQuery = "
     UPDATE Afspraken
-    SET Datum = ?, Tijd = ?, tandartsID = ?, BehandelingenID = ?
+    SET Datum = ?, Tijd = ?, Beschrijving = ?, tandartsID = ?, BehandelingenID = ?
     WHERE afspraakID = ? AND userID = ?
 ";
 $myDb->execute($updateQuery, [
     $selectedDate,
     $selectedTime,
+    $treatmentDescription,
     $tandartsID,
     $selectedTreatmentID,
     $appointmentID,

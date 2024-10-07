@@ -155,8 +155,13 @@ if (isset($_POST['cancel_appointment'])) {
                                     <td><?php echo htmlspecialchars($afspraak['patiënt']); ?></td>
                                     <td>
                                         <div class="action-buttons">
+                                            <form action="afspraak_wijzigen.php" method="post">
+                                                <input type="hidden" name="afspraakID" id="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
+                                                <button type="submit" name="edit_appointment">Wijzigen</button>
+                                            </form>
                                             <form action="afspraken.php" method="post">
                                                 <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
+
                                                 <button type="submit" name="cancel_appointment">Annuleren</button>
                                             </form>
                                         </div>

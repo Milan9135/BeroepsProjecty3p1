@@ -25,6 +25,15 @@ $time = $_POST['time'];
 $tandartsID = $_POST['dentist'];
 $treatmentID = $_POST['treatmentID']; // Gebruik treatmentID hier
 
+// Verkrijg de beschrijving van de behandeling op basis van de behandelingID
+$treatmentDescriptionQuery = $myDb->execute("SELECT Beschrijving FROM Behandelingen WHERE BehandelingenID = ?", [$treatmentID]);
+$treatmentDescription = $treatmentDescriptionQuery->fetchColumn(); // Haalt de beschrijving op
+
+// Controleer of de beschrijving bestaat
+if (!$treatmentDescription) {
+    die("Fout: De beschrijving voor de behandeling met ID '$treatmentID' bestaat niet.");
+}
+
 // Verkrijg de behandeling beschrijving (optioneel, als je het wilt gebruiken)
 $treatmentQuery = $myDb->execute("SELECT Beschrijving FROM Behandelingen WHERE BehandelingenID = ?", [$treatmentID]);
 $treatment = $treatmentQuery->fetch(PDO::FETCH_ASSOC);
@@ -35,18 +44,22 @@ $tandarts = $tandartsQuery->fetch(PDO::FETCH_ASSOC);
 $tandartsNaam = $tandarts['Naam'];
 
 // Voeg de afspraak toe aan de database
-$myDb->execute("INSERT INTO Afspraken (Datum, Tijd, BehandelingenID, userID, tandartsID) VALUES (?, ?, ?, ?, ?)",
-    [$date, $time, $treatmentID, $userId, $tandartsID]);
+$myDb->execute(
+    "INSERT INTO Afspraken (Datum, Tijd, Beschrijving, BehandelingenID, userID, tandartsID) VALUES (?, ?, ?, ?, ?, ?)",
+    [$date, $time, $treatmentDescription, $treatmentID, $userId, $tandartsID]
+);
 ?>
 
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afspraak Bevestiging</title>
     <link rel="stylesheet" href="../styles/Appointments.css">
 </head>
+
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
@@ -67,4 +80,5 @@ $myDb->execute("INSERT INTO Afspraken (Datum, Tijd, BehandelingenID, userID, tan
         <p>&copy; 2024 Tandartspraktijk. Alle rechten voorbehouden.</p>
     </div>
 </body>
+
 </html>

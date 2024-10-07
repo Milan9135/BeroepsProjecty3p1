@@ -9,6 +9,12 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Haal het userID van de ingelogde gebruiker op
+$userId = $_SESSION['user_id'];
+
+$userQuery = $myDb->execute("SELECT * FROM Users WHERE userID = ?", [$userId]);
+$user = $userQuery->fetch(PDO::FETCH_ASSOC);
+
 $appointmentID = $_POST['afspraakID'];
 
 $datum = $myDb->execute("SELECT Datum FROM Afspraken WHERE afspraakID = ?", [$appointmentID])->fetchColumn();
@@ -47,29 +53,37 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
         <div class="register-container">
             <h2>Kies Datum en Behandeling</h2>
 
-            <form action="./functions/select_dentist_and_time.php" method="post">
-                <input type="hidden" name="appointmentID" value="<?php echo htmlspecialchars($appointmentID); ?>">
 
-                <div class="input-group">
-                    <label for="date">Datum:</label>
-                    <input type="date" id="date" name="date" required min="<?php echo date('Y-m-d'); ?>" value="<?php echo isset($datum) ? $datum : ''; ?>">
-                </div>
+            <?php if ($user['Usertype'] == 'Patiënt'): ?>
+                <form action="./functions/select_dentist_and_time.php" method="post">
+                <?php elseif ($user['Usertype'] == 'Tandarts'): ?>
+                    <form action="./dentist_editAppointment.php" method="post">
+                    <?php endif; ?>
 
-                <div class="input-group">
-                    <label for="treatment">Behandeling:</label>
-                    <select id="treatment" name="treatmentID" required>
-                        <option value="" disabled selected><?php echo isset($behandelingBeschrijving) ? htmlspecialchars($behandelingBeschrijving) : 'Selecteer een behandeling'; ?></option>
 
-                        <?php foreach ($behandelingen as $behandeling): ?>
-                            <option value="<?php echo htmlspecialchars(trim($behandeling['Beschrijving'])); ?>">
-                                <?php echo htmlspecialchars(trim($behandeling['Beschrijving'])); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
 
-                <button type="submit">Volgende</button>
-            </form>
+                    <input type="hidden" name="appointmentID" value="<?php echo htmlspecialchars($appointmentID); ?>">
+
+                    <div class="input-group">
+                        <label for="date">Datum:</label>
+                        <input type="date" id="date" name="date" required min="<?php echo date('Y-m-d'); ?>" value="<?php echo isset($datum) ? $datum : ''; ?>">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="treatment">Behandeling:</label>
+                        <select id="treatment" name="treatmentID" required>
+                            <option value="" disabled selected><?php echo isset($behandelingBeschrijving) ? htmlspecialchars($behandelingBeschrijving) : 'Selecteer een behandeling'; ?></option>
+
+                            <?php foreach ($behandelingen as $behandeling): ?>
+                                <option value="<?php echo htmlspecialchars(trim($behandeling['Beschrijving'])); ?>">
+                                    <?php echo htmlspecialchars(trim($behandeling['Beschrijving'])); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <button type="submit">Volgende</button>
+                    </form>
         </div>
     </main>
 

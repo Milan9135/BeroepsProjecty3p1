@@ -17,7 +17,7 @@
     padding: 12px 50px;
     text-decoration: none;
     font-size: 16px;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -29,7 +29,7 @@
 
 /* Footer styling */
 .footer {
-    position: fixed;
+    position: relative;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -37,17 +37,18 @@
     color: #f5f5f5;
     text-align: center;
     padding: 10px 0;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
+    margin-top: auto;
 }
 
 /* Styling for the body of the website */
 body {
     margin: 0;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #f2f2f2;
     display: flex;
     flex-direction: column;
-    color: #333;
+    min-height: 100vh;
 }
 
 main {
@@ -83,8 +84,7 @@ table {
     margin-top: 20px;
 }
 
-th,
-td {
+th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ccc;
@@ -95,42 +95,42 @@ th {
     color: white;
 }
 
-/* Submit Button Styling */
+/* Action buttons styling */
+.action-buttons {
+    display: flex;
+    gap: 10px; /* Add some space between buttons */
+}
+
 button[type="submit"] {
     background-color: #1a1a2e;
     color: white;
     border: none;
-    padding: 1;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease;
 }
 
+button[type="submit"]:hover {
+    background-color: #e94560;
+}
+
+/* Appointment Button Styling */
 .appointment-button {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.appointment-button a {
+    background-color: #1a1a2e;
     color: white;
-    /* Witte tekstkleur */
-
-    /* Tekst centreren */
-    text-decoration: none;
-
-    font-size: 16px;
-    /* Tekstgrootte */
-    border-radius: 5px;
-    /* Ronde hoeken */
-}
-
-#conobomama {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    
-}
-
-#conobomama a {
-    background-color: #000000;
-    /* Transitie-effect voor achtergrondkleur */
     padding: 14px 20px;
-
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-#yh {
-    text-decoration: none;
-    color: white;
+.appointment-button a:hover {
+    background-color: #e94560;
 }

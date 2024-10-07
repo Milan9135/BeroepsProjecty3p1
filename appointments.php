@@ -9,13 +9,15 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+$message = "";
+
 // Controleer of de ingelogde gebruiker een patiënt is
 $userId = $_SESSION['user_id'];
 $query = $myDb->execute("SELECT * FROM Users WHERE userID = ?", [$userId]);
 $user = $query->fetch(PDO::FETCH_ASSOC);
 
 if ($user['Usertype'] !== 'Patiënt') {
-    echo "Toegang geweigerd. Alleen patiënten kunnen een afspraak maken.";
+    $message = "Toegang geweigerd. Alleen patiënten kunnen een afspraak maken.";
     exit();
 }
 
@@ -30,15 +32,20 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selecteer Datum - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/Appointments.css">
+    <script src="objects/navbar.js"></script>
 </head>
 
 <body>
-   <div><nav class="navbar">
-        <a href="index.php">Home</a>
-        <a href="afspraak_annuleren.php">Afspraken</a>
-        <a href="profiel.php">Mijn account</a>
-        <a href="logout.php">Logout</a></nav>
-    </div> 
+<div id="navbar">
+    <nav class="navbar">
+            <a id="placeholder" href="">a</a>
+            <style>
+                #placeholder {
+                    opacity: 0;
+                }
+            </style>
+        </nav>
+    </div>
 
     <main>
         <div class="register-container">
@@ -61,6 +68,7 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
                 </div>
                 <button type="submit">Volgende</button>
             </form>
+            <p id="message"><?php echo $message ?></p>
         </div>
     </main>
 

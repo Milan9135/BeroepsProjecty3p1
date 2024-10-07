@@ -6,8 +6,9 @@ session_start();
 
 if (isset($_SESSION['user_id'])) {
     $user = $_SESSION['userData'];
-}
 
+    var_dump($user);
+}
 
 ?>
 
@@ -20,32 +21,31 @@ if (isset($_SESSION['user_id'])) {
     <title>TandartsPlatform</title>
     <link rel="stylesheet" href="styles/tand.css" />
     <link rel="stylesheet" href="styles/article_styling.css">
+    <script src="objects/navbar.js"></script>
 </head>
 
 <body>
-    
-<nav class="navbar">
-    <a href="index.php">Home</a>
+    <div id="navbar">
+    <nav class="navbar">
+            <a id="placeholder" href="">a</a>
+            <style>
+                #placeholder {
+                    opacity: 0;
+                }
+            </style>
+        </nav>
+    </div>
 
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="logout.php">Logout</a>
-        <a href="profile.php">Profiel</a> <!-- Add this link to go to the profile page -->
-        <a href="afspraak_annuleren.php">Afspraken</a>
-    <?php else: ?>
-        <a href="login.php">Login</a>
-        <a href="register.php">Register</a>
-    <?php endif; ?>
-</nav>
     <header>
         <h1>LEDental</h1>
         <?php
-            if (isset($_SESSION['user_id'])) {
-                if ($user->usertype == 'Patiënt') {
-                    echo "<h2>Welkom, " . $user->patiënt->name . "</h2>";
-                } elseif ($user->usertype == 'Tandarts') {
-                    echo "<h2>Welkom, " . $user->tandarts->name . "</h2>";
-                }
+        if (isset($_SESSION['user_id'])) {
+            if ($user->usertype == 'Patiënt') {
+                echo "<h2>Welkom, " . $user->patiënt->name . "</h2>";
+            } elseif ($user->usertype == 'Tandarts') {
+                echo "<h2>Welkom, " . $user->tandarts->name . "</h2>";
             }
+        }
         ?>
     </header>
 
@@ -94,6 +94,7 @@ if (isset($_SESSION['user_id'])) {
     <footer class="footer">
         <p>&copy; 2020 TandartsPlatform</p>
     </footer>
+
 </body>
 
 </html>

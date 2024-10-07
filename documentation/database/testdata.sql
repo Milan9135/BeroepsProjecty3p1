@@ -14,10 +14,10 @@ VALUES
 ('Jane Smith', '1990-04-22', '0698765432', '456 Elm St', 4); -- userID = 4
 
 -- Insert test data into `Tandarts`
-INSERT INTO `Tandartsdb`.`Tandarts` (Naam, Geboortedatum, Telefoonnummer, Adres, Beoordeling, Specialisaties, Beschrijving)
+INSERT INTO `Tandartsdb`.`Tandarts` (Naam, Geboortedatum, Telefoonnummer, Adres, Beoordeling, Specialisaties, Beschrijving, userID)
 VALUES
-('Dr. Emily Adams', '1975-09-20', '0612349876', '789 Oak Ave', 4.8, 'Orthodontics, General Dentistry', 'Experienced in complex cases'), -- tandartsID = 1
-('Dr. Michael White', '1980-03-12', '0687654321', '321 Pine Rd', 4.5, 'Cosmetic Dentistry, General Dentistry', 'Focused on patient care and comfort'); -- tandartsID = 2
+('Dr. Emily Adams', '1975-09-20', '0612349876', '789 Oak Ave', 4.8, 'Orthodontics, General Dentistry', 'Experienced in complex cases', 2), -- userID = 2 (dentist1@example.com)
+('Dr. Michael White', '1980-03-12', '0687654321', '321 Pine Rd', 4.5, 'Cosmetic Dentistry, General Dentistry', 'Focused on patient care and comfort', 5); -- userID = 5 (dentist2@example.com)
 
 -- Insert test data into `Behandelingen`
 INSERT INTO `Tandartsdb`.`Behandelingen` (userID, Beschrijving)

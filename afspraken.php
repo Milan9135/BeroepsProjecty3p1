@@ -28,10 +28,10 @@ $afspraken = $afsprakenQuery->fetchAll(PDO::FETCH_ASSOC);
 // Verwerk het annuleren van een afspraak
 if (isset($_POST['cancel_appointment'])) {
     $afspraakID = $_POST['afspraakID'];
-    
+
     // Markeer de afspraak als geannuleerd
     $myDb->execute("UPDATE Afspraken SET geannuleerd = 1 WHERE afspraakID = ?", [$afspraakID]);
-    
+
     // Redirect naar de pagina om de wijzigingen weer te geven
     header('Location: afspraak_annuleren.php');
     exit();
@@ -40,18 +40,25 @@ if (isset($_POST['cancel_appointment'])) {
 
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mijn Afspraken - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/afspraak-annuleren.css">
+    <script src="objects/navbar.js"></script>
 </head>
+
 <body>
-    <div class="navbar">
-        <a href="index.php">Home</a>
-        <a href="afspraak_annuleren.php">Afspraken</a>
-        <a href="profiel.php">Mijn account</a>
-        <a href="logout.php">Logout</a>
+    <div id="navbar">
+        <nav class="navbar">
+            <a id="placeholder" href="">a</a>
+            <style>
+                #placeholder {
+                    opacity: 0;
+                }
+            </style>
+        </nav>
     </div>
 
     <main>
@@ -88,20 +95,21 @@ if (isset($_POST['cancel_appointment'])) {
             <?php else: ?>
 
 
-        
+
                 <p>Je hebt geen toekomstige afspraken.</p>
             <?php endif; ?>
         </div>
 
 
     </main>
-<div class="appointment-button"id="conobomama">
+    <div class="appointment-button" id="conobomama">
 
-<a href="./appointments.php" id="yh"> Afspraak maken</a>
-</div>
+        <a href="./appointments.php" id="yh"> Afspraak maken</a>
+    </div>
 
     <div class="footer">
         <p>&copy; 2024 Tandartspraktijk. Alle rechten voorbehouden.</p>
     </div>
 </body>
+
 </html>

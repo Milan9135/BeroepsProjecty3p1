@@ -17,7 +17,7 @@
     padding: 12px 50px;
     text-decoration: none;
     font-size: 16px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -37,13 +37,13 @@
     color: #f5f5f5;
     text-align: center;
     padding: 10px 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 /* Styling for the body of the website */
 body {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     background-color: #f2f2f2;
     display: flex;
     flex-direction: column;
@@ -83,7 +83,8 @@ table {
     margin-top: 20px;
 }
 
-th, td {
+th,
+td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ccc;
@@ -99,33 +100,37 @@ button[type="submit"] {
     background-color: #1a1a2e;
     color: white;
     border: none;
-    padding: 1
+    padding: 1;
 }
-
 
 .appointment-button {
+    color: white;
+    /* Witte tekstkleur */
 
-    background-color: #000000; /* Groene achtergrondkleur */
-    color: white; /* Witte tekstkleur */
-    padding: 14px 20px; /* Opvulling rondom de tekst */
-    text-align: center; /* Tekst centreren */
-  text-decoration: none;
-width: 200px;
-    font-size: 16px; /* Tekstgrootte */
-    border-radius: 5px; /* Ronde hoeken */
-    transition: background-color 0.3s ease; /* Transitie-effect voor achtergrondkleur */
+    /* Tekst centreren */
+    text-decoration: none;
+
+    font-size: 16px;
+    /* Tekstgrootte */
+    border-radius: 5px;
+    /* Ronde hoeken */
 }
 
-#conobomama{
-    margin-left: 830px;
+#conobomama {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
 }
-#yh{
+
+#conobomama a {
+    background-color: #000000;
+    /* Transitie-effect voor achtergrondkleur */
+    padding: 14px 20px;
+
+}
+
+#yh {
     text-decoration: none;
     color: white;
 }
-
-
-.appointment-button:hover {
-    background-color: #1a6aa0; /* Donkerdere groen bij hover */
-}
-

@@ -3,6 +3,8 @@ include "./Functions/registerFunction.php";
 
 $user = new user($myDb);
 
+$message = "";
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST["naam"]) || empty($_POST["email"]) || empty($_POST["wachtwoord"]) || empty($_POST["geboortedatum"]) || empty($_POST["telefoonnummer"]) || empty($_POST["adres"])) {
         echo "Vul alle velden in";
@@ -28,6 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+if (isset($toegevoegd) && !empty($toegevoegd)) {
+    $message = "Succesvol geregistreerd";
+}
 
 ?>
 
@@ -40,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registreren</title>
     <link rel="stylesheet" href="styles/register.css" />
+    <script src="objects/navbar.js"></script>
 </head>
 
 <body>
@@ -88,14 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <button type="submit">Registreren</button>
 
-            <?php
-            if (isset($toegevoegd) && !empty($toegevoegd)) {
-                echo '<p style="color: black; font-size: 1.25em; font-weight: bold; text-align: center; margin-top: 20px; padding: 10px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-                      Succesvol geregistreerd</p>';
-            }
-            ?>
         </form>
-        <p id="message"></p>
+        <p id="message"><?php echo $message ?></p>
     </div>
     </main>
 

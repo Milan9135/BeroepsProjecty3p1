@@ -1,11 +1,14 @@
 <?php
+
 session_start();
 include 'db.php';
 
-// Include the User ckass
+// Include the User class
 include "objects/user.php";
 
 $db = new DB("Tandartsdb");
+
+$message = "";
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -14,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Input validation
     if (empty($email) || empty($password)) {
-        echo "Vul alle velden in.";
+        $message = "Vul alle velden in.";
     } else {
         try {
             // Prepare and execute query to find user
@@ -32,33 +35,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     // Get user data based on Usertype
                     $userType = $user['Usertype'];
+                    $extraData = null;
 
                     // Based on Usertype, fetch relevant details
-                    $extraData = null;
                     if ($userType == 'Patiënt') {
                         $query = "SELECT p.*, u.Email, u.Usertype 
-                        FROM Tandartsdb.Patiënt p 
-                        JOIN Tandartsdb.Users u ON p.userID = u.userID 
-                        WHERE p.userID = ?";
+                                  FROM Tandartsdb.Patiënt p 
+                                  JOIN Tandartsdb.Users u ON p.userID = u.userID 
+                                  WHERE p.userID = ?";
                         $extraData = $db->select($query, [$user['userID']]);
 
                         if (!empty($extraData)) {
-                            $extraData = $extraData[0];
-                        } else {
-                            echo "no extra data for patient. ";
+                            $extraData = $extraData[0];  // Get the first result if multiple rows
                         }
+
+                        // Debugging: Output patient data
+                        echo "<pre>Fetched Patiënt Data: ";
+                        print_r($extraData);
+                        echo "</pre>";
+
                     } elseif ($userType == 'Tandarts') {
                         $query = "SELECT t.*, u.Email, u.Usertype 
-                        FROM Tandartsdb.Tandarts t 
-                        JOIN Tandartsdb.Users u ON t.userID = u.userID;";
+                                  FROM Tandartsdb.Tandarts t 
+                                  JOIN Tandartsdb.Users u ON t.userID = u.userID 
+                                  WHERE t.userID = ?";
                         $extraData = $db->select($query, [$user['userID']]);
 
                         if (!empty($extraData)) {
-                            $extraData = $extraData[0];
-                        } else {
-                            echo "no extra data for tandarts. ";
+                            $extraData = $extraData[0];  // Get the first result if multiple rows
                         }
+
+                        // Debugging: Output tandarts data
+                        echo "<pre>Fetched Tandarts Data: ";
+                        print_r($extraData);
+                        echo "</pre>";
                     }
+
+                    // Debugging: Output fetched user details and extraData before object creation
+                    echo "<pre>User Details: ";
+                    print_r($user);
+                    echo "</pre>";
+
+                    echo "<pre>Extra Data: ";
+                    print_r($extraData);
+                    echo "</pre>";
 
                     // Create a new User object with the additional data
                     $userObject = new User(
@@ -68,6 +88,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $extraData
                     );
 
+                    // Debugging: Output created user object to check if tandarts or patiënt is correctly populated
+                    echo "<pre>Created User Object: ";
+                    print_r($userObject);
+                    echo "</pre>";
+
                     // Store the User object in the session
                     $_SESSION['userData'] = $userObject;
 
@@ -75,16 +100,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     header("Location: index.php");
                     exit();
                 } else {
-                    echo "Onjuiste inloggegevens.";
+                    $message = "Onjuiste inloggegevens.";
                 }
             } else {
-                echo "Onjuiste inloggegevens.";
+                $message = "Onjuiste inloggegevens.";
             }
         } catch (Exception $e) {
-            echo "Fout: " . $e->getMessage();
+            $message = "Fout: " . $e->getMessage();
         }
     }
 }
+?>
+
+
 ?>
 
 
@@ -96,21 +124,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/tand.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <script src="objects/navbar.js"></script>
 </head>
 
 <body>
-    <nav class="navbar">
-        <a href="index.php">Home</a>
-
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="logout.php">Logout</a>
-            <a href="profile.php">Profiel</a> <!-- Add this link to go to the profile page -->
-            <a href="afspraak_annuleren.php">Afspraken</a>
-        <?php else: ?>
-            <a href="login.php">Login</a>
-            <a href="register.php">Register</a>
-        <?php endif; ?>
-    </nav>
+    <div id="navbar">
+        <nav class="navbar">
+            <a id="placeholder" href="">a</a>
+            <style>
+                #placeholder {
+                    opacity: 0;
+                }
+            </style>
+        </nav>
+    </div>
 
     <main>
         <div class="register-container">
@@ -126,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <button type="submit">Inloggen</button>
             </form>
-            <p id="message"></p>
+            <p id="message"><?php echo $message ?></p>
         </div>
     </main>
 

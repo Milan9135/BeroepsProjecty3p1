@@ -69,22 +69,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profiel Bewerken</title>
     <link rel="stylesheet" href="styles/tand.css">
+    <script src="objects/navbar.js"></script>
 </head>
 
 <body>
 
+<div id="navbar">
     <nav class="navbar">
-        <a href="index.php">Home</a>
-
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="logout.php">Logout</a>
-            <a href="profile.php">Profiel</a>
-            <a href="afspraak_annuleren.php">Afspraken</a>
-        <?php else: ?>
-            <a href="login.php">Login</a>
-            <a href="register.php">Register</a>
-        <?php endif; ?>
-    </nav>
+            <a id="placeholder" href="">a</a>
+            <style>
+                #placeholder {
+                    opacity: 0;
+                }
+            </style>
+        </nav>
+    </div>
 
     <header>
         <h1>Profiel Bewerken</h1>

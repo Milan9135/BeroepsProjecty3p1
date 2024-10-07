@@ -25,7 +25,7 @@ class User {
             $this->tandarts = new Tandarts(
                 $extraData['tandartsID'],
                 $extraData['Naam'],
-                $extraData['Geboortedarum'],
+                $extraData['Geboortedatum'],
                 $extraData['Telefoonnummer'],
                 $extraData['Adres'],
                 $extraData['Beoordeling'],

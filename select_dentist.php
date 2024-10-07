@@ -59,6 +59,7 @@ if ($tandartsID) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selecteer Tandarts en Tijdslot - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/Appointments.css">
+    <script src="objects/navbar.js"></script>
 </head>
 <body>
     <div class="navbar">

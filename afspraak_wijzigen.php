@@ -17,6 +17,11 @@ $user = $userQuery->fetch(PDO::FETCH_ASSOC);
 
 $appointmentID = $_POST['afspraakID'];
 
+if ($user['Usertype'] == 'Tandarts') {
+    $patientIDQuery = $myDb->execute("SELECT userID FROM Afspraken WHERE afspraakID = ?", [$appointmentID]);
+    $patientID = $patientIDQuery->fetchColumn(); // Haalt de userID op
+}
+
 $datum = $myDb->execute("SELECT Datum FROM Afspraken WHERE afspraakID = ?", [$appointmentID])->fetchColumn();
 
 // Fetch the BehandelingenID (it returns an associative array, so we access 'BehandelingenID')
@@ -58,6 +63,8 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
                 <form action="./functions/select_dentist_and_time.php" method="post">
                 <?php elseif ($user['Usertype'] == 'Tandarts'): ?>
                     <form action="./dentist_editAppointment.php" method="post">
+                    <input type="hidden" name="patientID" value="<?php echo htmlspecialchars($patientID); ?>">
+
                     <?php endif; ?>
 
 

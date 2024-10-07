@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS `Afspraken` (
 CREATE TABLE IF NOT EXISTS `Tijdsloten` (
   `slotID` INT NOT NULL AUTO_INCREMENT,
   `Tijd` TIME NOT NULL,
-  `userID` INT NOT NULL,
+  `tandartsID` INT NOT NULL,
   PRIMARY KEY (`slotID`),
-  FOREIGN KEY (`userID`) REFERENCES Tandarts(`userID`) ON DELETE CASCADE
+  FOREIGN KEY (`tandartsID`) REFERENCES Tandarts(`tandartsID`) ON DELETE CASCADE
 );
 
 -- Create Verzekeringen table

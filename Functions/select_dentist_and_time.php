@@ -49,7 +49,7 @@ $tandartsen = $myDb->execute("
 $tandartsID = isset($_POST['dentist']) ? $_POST['dentist'] : null;
 $tijdsloten = [];
 if ($tandartsID) {
-    $tijdsloten = $myDb->execute("SELECT Tijd FROM Tijdsloten WHERE userID = ?", [$tandartsID])->fetchAll(PDO::FETCH_ASSOC);
+    $tijdsloten = $myDb->execute("SELECT Tijd FROM Tijdsloten WHERE tandartsID = ?", [$tandartsID])->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
@@ -70,7 +70,7 @@ if ($tandartsID) {
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
-        <a href="afspraak_annuleren.php">Afspraken</a>
+        <a href="afspraken.php">Afspraken</a>
         <a href="profiel.php">Mijn account</a>
         <a href="logout.php">Logout</a>
     </div>

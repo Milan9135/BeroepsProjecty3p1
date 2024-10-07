@@ -45,7 +45,7 @@ $myDb->execute($updateQuery, [
 ]);
 
 echo "Afspraak succesvol gewijzigd.";
-header('Location: ../afspraak_annuleren.php');
+header('Location: ../afspraken.php');
 exit();
 ?>
 
@@ -60,7 +60,7 @@ exit();
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
-        <a href="afspraak_annuleren.php">Afspraken</a>
+        <a href="afspraken.php">Afspraken</a>
         <a href="profiel.php">Mijn account</a>
         <a href="logout.php">Logout</a>
     </div>

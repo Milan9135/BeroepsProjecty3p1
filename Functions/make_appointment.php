@@ -50,7 +50,7 @@ $myDb->execute("INSERT INTO Afspraken (Datum, Tijd, BehandelingenID, userID, tan
 <body>
     <div class="navbar">
         <a href="index.php">Home</a>
-        <a href="../afspraak_annuleren.php">Afspraken</a>
+        <a href="../afspraken.php">Afspraken</a>
         <a href="profiel.php">Mijn account</a>
         <a href="logout.php">Logout</a>
     </div>
@@ -59,7 +59,7 @@ $myDb->execute("INSERT INTO Afspraken (Datum, Tijd, BehandelingenID, userID, tan
         <div class="confirmation-container">
             <h2>Afspraak Bevestiging</h2>
             <p>Afspraak gemaakt op <strong><?php echo htmlspecialchars($date); ?></strong> om <strong><?php echo htmlspecialchars($time); ?></strong> met tandarts <strong><?php echo htmlspecialchars($tandartsNaam); ?></strong>.</p>
-            <a href="../afspraak_annuleren.php" class="button">Afspraak inzien</a>
+            <a href="../afspraken.php" class="button">Afspraak inzien</a>
         </div>
     </main>
 

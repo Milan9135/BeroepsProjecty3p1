@@ -22,10 +22,10 @@ VALUES
 -- Insert test data into `Behandelingen`
 INSERT INTO `Tandartsdb`.`Behandelingen` (userID, Beschrijving)
 VALUES
-(1, 'Teeth cleaning and plaque removal'), -- userID = 1
-(1, 'Cavity filling'), -- userID = 1
+(5, 'Teeth cleaning and plaque removal'), -- userID = 1
+(5, 'Cavity filling'), -- userID = 1
 (2, 'Teeth whitening'), -- userID = 2
-(4, 'Root canal treatment'); -- userID = 4
+(2, 'Root canal treatment'); -- userID = 4
 
 -- Insert test data into `Afspraken`
 INSERT INTO `Tandartsdb`.`Afspraken` (Datum, Tijd, Beschrijving, geannuleerd, userID, tandartsID, BehandelingenID)
@@ -40,3 +40,12 @@ INSERT INTO `Tandartsdb`.`Verzekeringen` (userID, Beschrijving)
 VALUES
 (1, 'Basic dental insurance plan'),
 (4, 'Comprehensive dental insurance'); -- userID = 4
+
+-- Insert test data into Tijdsloten for each dentist (tandarts)
+INSERT INTO `Tandartsdb`.`Tijdsloten` (Tijd, tandartsID)
+VALUES
+('09:00:00', 1), -- Dr. Emily Adams (tandartsID = 1)
+('10:00:00', 1), -- Dr. Emily Adams (tandartsID = 1)
+('11:00:00', 2), -- Dr. Michael White (tandartsID = 2)
+('14:00:00', 2); -- Dr. Michael White (tandartsID = 2)
+

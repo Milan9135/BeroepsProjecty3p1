@@ -37,14 +37,13 @@ if (isset($_POST['cancel_appointment'])) {
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mijn Afspraken - Tandartspraktijk</title>
-    <link rel="stylesheet" href="./styles/afspraak-annuleren.css">
+    <link rel="stylesheet" href="./styles/afspraak-annuleren1.css">
 </head>
 <body>
     <div class="navbar">
@@ -76,29 +75,35 @@ if (isset($_POST['cancel_appointment'])) {
                                 <td><?php echo htmlspecialchars($afspraak['behandeling']); ?></td>
                                 <td><?php echo htmlspecialchars($afspraak['tandarts']); ?></td>
                                 <td>
-                                    <form action="afspraak_annuleren.php" method="post">
-                                        <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
-                                        <button type="submit" name="cancel_appointment">Annuleren</button>
-                                    </form>
+                                    <div class="action-buttons">
+                                        <!-- Knop om de afspraak te wijzigen -->
+                                        <form action="afspraak_wijzigen.php" method="post">
+                                            <input type="hidden" name="afspraakID" id="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
+                                            <button type="submit" name="edit_appointment">Wijzigen</button>
+                                        </form>
+
+                                        <!-- Knop om de afspraak te annuleren -->
+                                        <form action="afspraak_annuleren.php" method="post">
+                                            <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
+                                            <button type="submit" name="cancel_appointment">Annuleren</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             <?php else: ?>
-
-
-        
                 <p>Je hebt geen toekomstige afspraken.</p>
             <?php endif; ?>
         </div>
-
-
     </main>
-<div class="appointment-button"id="conobomama">
 
-<a href="./appointments.php" id="yh"> Afspraak maken</a>
-</div>
+    <?php if (count($afspraken) === 0): ?>
+        <div class="appointment-button">
+            <a href="./appointments.php">Afspraak maken</a>
+        </div>
+    <?php endif; ?>
 
     <div class="footer">
         <p>&copy; 2024 Tandartspraktijk. Alle rechten voorbehouden.</p>

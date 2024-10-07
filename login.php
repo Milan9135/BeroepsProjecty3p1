@@ -40,45 +40,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     // Based on Usertype, fetch relevant details
                     if ($userType == 'Patiënt') {
                         $query = "SELECT p.*, u.Email, u.Usertype 
-                                  FROM Tandartsdb.Patiënt p 
-                                  JOIN Tandartsdb.Users u ON p.userID = u.userID 
-                                  WHERE p.userID = ?";
+                            FROM Tandartsdb.Patiënt p 
+                            JOIN Tandartsdb.Users u ON p.userID = u.userID 
+                            WHERE p.userID = ?";
                         $extraData = $db->select($query, [$user['userID']]);
 
                         if (!empty($extraData)) {
                             $extraData = $extraData[0];  // Get the first result if multiple rows
                         }
-
-                        // Debugging: Output patient data
-                        echo "<pre>Fetched Patiënt Data: ";
-                        print_r($extraData);
-                        echo "</pre>";
 
                     } elseif ($userType == 'Tandarts') {
                         $query = "SELECT t.*, u.Email, u.Usertype 
-                                  FROM Tandartsdb.Tandarts t 
-                                  JOIN Tandartsdb.Users u ON t.userID = u.userID 
-                                  WHERE t.userID = ?";
+                            FROM Tandartsdb.Tandarts t 
+                            JOIN Tandartsdb.Users u ON t.userID = u.userID 
+                            WHERE t.userID = ?";
                         $extraData = $db->select($query, [$user['userID']]);
 
                         if (!empty($extraData)) {
                             $extraData = $extraData[0];  // Get the first result if multiple rows
                         }
-
-                        // Debugging: Output tandarts data
-                        echo "<pre>Fetched Tandarts Data: ";
-                        print_r($extraData);
-                        echo "</pre>";
                     }
-
-                    // Debugging: Output fetched user details and extraData before object creation
-                    echo "<pre>User Details: ";
-                    print_r($user);
-                    echo "</pre>";
-
-                    echo "<pre>Extra Data: ";
-                    print_r($extraData);
-                    echo "</pre>";
 
                     // Create a new User object with the additional data
                     $userObject = new User(
@@ -87,11 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $user['Usertype'],
                         $extraData
                     );
-
-                    // Debugging: Output created user object to check if tandarts or patiënt is correctly populated
-                    echo "<pre>Created User Object: ";
-                    print_r($userObject);
-                    echo "</pre>";
 
                     // Store the User object in the session
                     $_SESSION['userData'] = $userObject;
@@ -111,10 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
-
-?>
-
 
 <!DOCTYPE html>
 <html lang="nl">
@@ -160,8 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <footer class="footer">
         <p>&copy; 2020 TandartsPlatform</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 
 </html>

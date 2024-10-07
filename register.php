@@ -65,7 +65,7 @@ if (isset($toegevoegd) && !empty($toegevoegd)) {
 
     <main>
     <div class="register-container">
-        <h2>Inschrijven voor patiënten</h2>
+        <h2>REGISTREREN</h2>
         <form id="registerForm" method="POST">
             <div class="input-group">
                 <label for="naam">Naam</label>

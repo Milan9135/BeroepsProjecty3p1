@@ -6,8 +6,6 @@ session_start();
 
 if (isset($_SESSION['user_id'])) {
     $user = $_SESSION['userData'];
-
-    var_dump($user);
 }
 
 ?>

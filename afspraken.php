@@ -30,6 +30,10 @@ if ($user['Usertype'] == 'Patiënt') {
 }
 // Haal de afspraken van de tandarts op
 if ($user['Usertype'] == 'Tandarts') {
+    $tandartsIdQuery = $myDb->execute("SELECT tandartsID FROM Tandarts WHERE userID = ?", [$userId]);
+    $tandarts = $tandartsIdQuery->fetch(PDO::FETCH_ASSOC);
+    $tandartsID = $tandarts['tandartsID'];
+
     $afsprakenQuery = $myDb->execute("
         SELECT A.afspraakID, A.Datum AS afspraakDatum, A.Tijd AS afspraakTijd, B.Beschrijving AS behandeling, P.Naam AS patiënt
         FROM Afspraken A
@@ -37,7 +41,7 @@ if ($user['Usertype'] == 'Tandarts') {
         JOIN Patiënt P ON A.userID = P.userID
         WHERE A.tandartsID = ? AND A.geannuleerd = 0
         ORDER BY A.Datum ASC, A.Tijd ASC
-    ", [$user['userID']]);
+    ", [$tandartsID]);
 
     $afspraken = $afsprakenQuery->fetchAll(PDO::FETCH_ASSOC);
 }

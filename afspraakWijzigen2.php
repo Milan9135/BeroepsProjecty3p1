@@ -1,8 +1,8 @@
 <?php
-include '../db.php';
+include './db.php';
 session_start();
 
-$myDb = new DB("Tandartsdb");
+$myDb = new DB();
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -20,7 +20,7 @@ if ($user['Usertype'] !== 'Patiënt') {
 }
 
 if (!isset($_POST['date']) || !isset($_POST['treatmentID'])) {
-    header('Location: ../afspraak_wijzigen.php');
+    header('Location: ../afspraakWijzigen.php');
     exit();
 }
 
@@ -64,7 +64,7 @@ if ($tandartsID) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kies Tandarts en Tijdslot</title>
-    <link rel="stylesheet" href="../styles/Appointments.css">
+    <link rel="stylesheet" href="./styles/Appointments.css">
 </head>
 
 <body>
@@ -79,7 +79,7 @@ if ($tandartsID) {
         <div class="register-container">
             <h2>Kies Tandarts en Tijdslot</h2>
 
-            <form action="select_dentist_and_time.php" method="post">
+            <form action="afspraakWijzigen2.php" method="post">
                 <input type="hidden" name="date" value="<?php echo htmlspecialchars($selectedDate); ?>">
                 <input type="hidden" name="treatmentID" value="<?php echo isset($selectedTreatmentDescription) ? htmlspecialchars($selectedTreatmentDescription) : ''; ?>">
                 <input type="hidden" name="appointmentID" value="<?php echo htmlspecialchars($appointmentID); ?>">
@@ -99,7 +99,7 @@ if ($tandartsID) {
             </form>
 
             <?php if ($tandartsID): ?>
-                <form action="./edit_appointment.php" method="post">
+                <form action="./Functions/edit_appointment.php" method="post">
                     <input type="hidden" name="date" value="<?php echo htmlspecialchars($selectedDate); ?>">
                     <input type="hidden" name="dentist" value="<?php echo htmlspecialchars($tandartsID); ?>">
                     <input type="hidden" name="treatment" value="<?php echo htmlspecialchars($selectedTreatmentDescription); ?>">

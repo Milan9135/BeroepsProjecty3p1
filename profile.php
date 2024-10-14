@@ -17,7 +17,7 @@ $user = $_SESSION['userData'];
 
 // Include the DB
 include 'db.php';
-$db = new DB("Tandartsdb");
+$db = new DB();
 
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

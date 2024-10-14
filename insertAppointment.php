@@ -1,8 +1,8 @@
 <?php
-include "../db.php";
+include 'db.php';
 session_start();
 
-$myDb = new DB("Tandartsdb");
+$myDb = new DB();
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -57,22 +57,27 @@ $myDb->execute(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afspraak Bevestiging</title>
-    <link rel="stylesheet" href="../styles/Appointments.css">
+    <link rel="stylesheet" href="./styles/Appointments.css">
+    <script src="objects/navbar.js"></script>
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="index.php">Home</a>
-        <a href="../afspraken.php">Afspraken</a>
-        <a href="profiel.php">Mijn account</a>
-        <a href="logout.php">Logout</a>
+    <div id="navbar">
+        <nav class="navbar">
+            <a id="placeholder" href="">a</a>
+            <style>
+                #placeholder {
+                    opacity: 0;
+                }
+            </style>
+        </nav>
     </div>
 
     <main>
         <div class="confirmation-container">
             <h2>Afspraak Bevestiging</h2>
             <p>Afspraak gemaakt op <strong><?php echo htmlspecialchars($date); ?></strong> om <strong><?php echo htmlspecialchars($time); ?></strong> met tandarts <strong><?php echo htmlspecialchars($tandartsNaam); ?></strong>.</p>
-            <a href="../afspraken.php" class="button">Afspraak inzien</a>
+            <a href="afspraken.php" class="button">Afspraak inzien</a>
         </div>
     </main>
 

@@ -44,7 +44,7 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kies Datum en Behandeling</title>
     <link rel="stylesheet" href="./styles/Appointments.css">
-    <script src="navbar.js"></script>
+    <script src="objects/navbar.js"></script>
 </head>
 
 <body>
@@ -65,7 +65,7 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
 
 
             <?php if ($user['Usertype'] == 'Patiënt'): ?>
-                <form action="./functions/select_dentist_and_time.php" method="post">
+                <form action="./afspraakWijzigen2.php" method="post">
                 <?php elseif ($user['Usertype'] == 'Tandarts'): ?>
                     <form action="./dentist_editAppointment.php" method="post">
                         <input type="hidden" name="patientID" value="<?php echo htmlspecialchars($patientID); ?>">

@@ -2,7 +2,7 @@
 include '../db.php';
 session_start();
 
-$myDb = new DB("Tandartsdb");
+$myDb = new DB();
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');

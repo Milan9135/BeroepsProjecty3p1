@@ -6,7 +6,7 @@ include 'db.php';
 // Include the User class
 include "objects/user.php";
 
-$db = new DB("Tandartsdb");
+$db = new DB();
 
 $message = "";
 

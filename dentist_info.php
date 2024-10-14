@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'Patiënt') {
     exit();
 }
 
-$db = new DB("Tandartsdb");
+$db = new DB();
 
 try {
     // Fetch all dentists (tandartsen) with their details, including email

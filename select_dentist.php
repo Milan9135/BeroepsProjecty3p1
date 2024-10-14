@@ -2,7 +2,7 @@
 include 'db.php';
 session_start();
 
-$myDb = new DB("Tandartsdb");
+$myDb = new DB();
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -20,7 +20,7 @@ if ($user['Usertype'] !== 'Patiënt') {
 }
 
 if (!isset($_POST['date']) || !isset($_POST['treatment'])) {
-    header('Location: appointments.php');
+    header('Location: createAppointments.php');
     exit();
 }
 
@@ -54,6 +54,7 @@ if ($tandartsID) {
 
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,12 +62,17 @@ if ($tandartsID) {
     <link rel="stylesheet" href="./styles/Appointments.css">
     <script src="objects/navbar.js"></script>
 </head>
+
 <body>
-    <div class="navbar">
-        <a href="index.php">Home</a>
-        <a href="afspraken.php">Afspraken</a>
-        <a href="profiel.php">Mijn account</a>
-        <a href="logout.php">Logout</a>
+    <div id="navbar">
+        <nav class="navbar">
+            <a id="placeholder" href="">a</a>
+            <style>
+                #placeholder {
+                    opacity: 0;
+                }
+            </style>
+        </nav>
     </div>
 
     <main>
@@ -76,7 +82,7 @@ if ($tandartsID) {
                 <input type="hidden" name="date" value="<?php echo htmlspecialchars($selectedDate); ?>">
                 <input type="hidden" name="treatment" value="<?php echo htmlspecialchars($selectedTreatmentDescription); ?>">
                 <input type="hidden" name="treatmentID" value="<?php echo htmlspecialchars($selectedTreatmentID); ?>"> <!-- Voeg dit toe -->
-                
+
                 <div class="input-group">
                     <label for="dentist">Kies een tandarts:</label>
                     <select id="dentist" name="dentist" onchange="this.form.submit()" required>
@@ -91,7 +97,7 @@ if ($tandartsID) {
             </form>
 
             <?php if ($tandartsID): ?>
-                <form action="./Functions/make_appointment.php" method="post">
+                <form action="insertAppointment.php" method="post">
                     <input type="hidden" name="date" value="<?php echo htmlspecialchars($selectedDate); ?>">
                     <input type="hidden" name="dentist" value="<?php echo htmlspecialchars($tandartsID); ?>">
                     <input type="hidden" name="treatment" value="<?php echo htmlspecialchars($selectedTreatmentDescription); ?>">
@@ -119,4 +125,5 @@ if ($tandartsID) {
         <p>&copy; 2024 Tandartspraktijk. Alle rechten voorbehouden.</p>
     </div>
 </body>
+
 </html>

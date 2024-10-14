@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'Tandarts') {
     exit();
 }
 
-$db = new DB("Tandartsdb");
+$db = new DB();
 
 try {
     // Fetch all patients

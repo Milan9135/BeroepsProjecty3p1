@@ -2,7 +2,7 @@
 include 'db.php';
 session_start();
 
-$myDb = new DB("Tandartsdb");
+$myDb = new DB();
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -36,8 +36,8 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
 </head>
 
 <body>
-<div id="navbar">
-    <nav class="navbar">
+    <div id="navbar">
+        <nav class="navbar">
             <a id="placeholder" href="">a</a>
             <style>
                 #placeholder {

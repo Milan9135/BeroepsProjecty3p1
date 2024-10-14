@@ -2,7 +2,7 @@
 include 'db.php';
 session_start();
 
-$myDb = new DB("Tandartsdb");
+$myDb = new DB();
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -22,12 +22,24 @@ if ($user['Usertype'] == 'Patiënt') {
         FROM Afspraken A
         JOIN Behandelingen B ON A.BehandelingenID = B.BehandelingenID
         JOIN Tandarts T ON A.tandartsID = T.tandartsID
-        WHERE A.userID = ? AND A.geannuleerd = 0
+        WHERE A.userID = ? AND A.geannuleerd = 0 AND A.voltooid = 0
         ORDER BY A.Datum ASC, A.Tijd ASC
     ", [$userId]);
 
     $afspraken = $afsprakenQuery->fetchAll(PDO::FETCH_ASSOC);
 }
+
+$treatmentHistoryQuery = $myDb->execute("
+    SELECT A.afspraakID, A.Datum AS afspraakDatum, A.Tijd AS afspraakTijd, B.Beschrijving AS behandeling, T.Naam AS tandarts
+    FROM Afspraken A
+    JOIN Behandelingen B ON A.BehandelingenID = B.BehandelingenID
+    JOIN Tandarts T ON A.tandartsID = T.tandartsID
+    WHERE A.userID = ? AND A.voltooid = 1
+    ORDER BY A.Datum DESC, A.Tijd DESC
+", [$userId]);
+
+$treatmentHistory = $treatmentHistoryQuery->fetchAll(PDO::FETCH_ASSOC);
+
 // Haal de afspraken van de tandarts op
 if ($user['Usertype'] == 'Tandarts') {
     $tandartsIdQuery = $myDb->execute("SELECT tandartsID FROM Tandarts WHERE userID = ?", [$userId]);
@@ -39,7 +51,7 @@ if ($user['Usertype'] == 'Tandarts') {
         FROM Afspraken A
         JOIN Behandelingen B ON A.BehandelingenID = B.BehandelingenID
         JOIN Patiënt P ON A.userID = P.userID
-        WHERE A.tandartsID = ? AND A.geannuleerd = 0
+        WHERE A.tandartsID = ? AND A.geannuleerd = 0 AND A.voltooid = 0
         ORDER BY A.Datum ASC, A.Tijd ASC
     ", [$tandartsID]);
 
@@ -57,6 +69,17 @@ if (isset($_POST['cancel_appointment'])) {
     header('Location: afspraken.php');
     exit();
 }
+// voltooid
+if (isset($_POST['complete_appointment'])) {
+    $afspraakID = $_POST['afspraakID'];
+
+    // Update de afspraak naar voltooid
+    $myDb->execute("UPDATE Afspraken SET voltooid = 1 WHERE afspraakID = ?", [$afspraakID]);
+
+    // Redirect naar de afsprakenpagina om de wijzigingen te tonen
+    header('Location: afspraken.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -65,7 +88,7 @@ if (isset($_POST['cancel_appointment'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mijn Afspraken - Tandartspraktijk</title>
-    <link rel="stylesheet" href="./styles/afspraak-annuleren1.css">
+    <link rel="stylesheet" href="./styles/afspraak-annuleren.css">
     <script src="objects/navbar.js"></script>
 </head>
 
@@ -110,7 +133,7 @@ if (isset($_POST['cancel_appointment'])) {
                                         <td>
                                             <div class="action-buttons">
                                                 <!-- Knop om de afspraak te wijzigen -->
-                                                <form action="afspraak_wijzigen.php" method="post">
+                                                <form action="afspraakWijzigen.php" method="post">
                                                     <input type="hidden" name="afspraakID" id="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
                                                     <button type="submit" name="edit_appointment">Wijzigen</button>
                                                 </form>
@@ -127,16 +150,42 @@ if (isset($_POST['cancel_appointment'])) {
                             </tbody>
                         </table>
                     <?php else: ?>
-
-
-
                         <p>Je hebt geen toekomstige afspraken.</p>
                     <?php endif; ?>
                 </div>
 
                 <div class="appointment-button" id="conobomama">
-                    <a href="./appointments.php" id="yh"> Afspraak maken</a>
+                    <a href="./createAppointments.php" id="yh"> Afspraak maken</a>
                 </div>
+            
+                <div class="treatmentHistory">
+                    <h2>Behandelgeschiedenis</h2>
+                    <?php if (count($treatmentHistory) > 0): ?>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Datum</th>
+                                    <th>Tijd</th>
+                                    <th>Behandeling</th>
+                                    <th><?php echo $user['Usertype'] == 'Patiënt' ? 'Tandarts' : 'Patiënt'; ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($treatmentHistory as $history): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($history['afspraakDatum']); ?></td>
+                                        <td><?php echo htmlspecialchars($history['afspraakTijd']); ?></td>
+                                        <td><?php echo htmlspecialchars($history['behandeling']); ?></td>
+                                        <td><?php echo htmlspecialchars($user['Usertype'] == 'Patiënt' ? $history['tandarts'] : $history['patiënt']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p>Er is nog geen behandelgeschiedenis.</p>
+                    <?php endif; ?>
+                </div>
+
             <?php elseif ($user['Usertype'] == 'Tandarts'): ?>
                 <h2>Afspraken Overzicht</h2>
                 <?php if (count($afspraken) > 0): ?>
@@ -159,10 +208,9 @@ if (isset($_POST['cancel_appointment'])) {
                                     <td><?php echo htmlspecialchars($afspraak['patiënt']); ?></td>
                                     <td>
                                         <div class="action-buttons">
-                                            <form action="afspraak_wijzigen.php" method="post">
-                                                <input type="hidden" name="afspraakID" id="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
-
-                                                <button type="submit" name="edit_appointment">Wijzigen</button>
+                                            <form action="afspraken.php" method="post">
+                                                <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
+                                                <button type="submit" name="complete_appointment">Voltooid</button>
                                             </form>
                                             <form action="afspraken.php" method="post">
                                                 <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">

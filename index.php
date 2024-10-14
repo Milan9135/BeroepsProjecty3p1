@@ -71,7 +71,7 @@ if (isset($_SESSION['user_id'])) {
                     ervaring van begin tot eind.
                 </p>
                 <div class="button-container">
-                    <a href="appointments.php" class="appointment-button">Afspraak maken</a>
+                    <a href="createAppointments.php" class="appointment-button">Afspraak maken</a>
                 </div>
             </article>
 

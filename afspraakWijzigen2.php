@@ -65,14 +65,20 @@ if ($tandartsID) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kies Tandarts en Tijdslot</title>
     <link rel="stylesheet" href="./styles/Appointments.css">
+    <script src="objects/navbar.js"></script>
+
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="index.php">Home</a>
-        <a href="afspraken.php">Afspraken</a>
-        <a href="profiel.php">Mijn account</a>
-        <a href="logout.php">Logout</a>
+    <div id="navbar">
+        <nav class="navbar">
+            <a id="placeholder" href="">a</a>
+            <style>
+                #placeholder {
+                    opacity: 0;
+                }
+            </style>
+        </nav>
     </div>
 
     <main>

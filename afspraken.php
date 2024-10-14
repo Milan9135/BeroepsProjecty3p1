@@ -89,6 +89,7 @@ if (isset($_POST['complete_appointment'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mijn Afspraken - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/afspraak-annuleren.css">
+    
     <script src="objects/navbar.js"></script>
 </head>
 

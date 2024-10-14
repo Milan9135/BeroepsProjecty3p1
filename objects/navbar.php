@@ -18,6 +18,7 @@ if (isset($_SESSION['user_id'])) {
             <a href="profile.php">Profiel</a>
             <a href="afspraken.php">Afspraken</a>
             <a href="dentist_info.php">Tandartsen</a>
+            <a href="verzekeringen.php">Verzekeringen</a>
         <?php elseif ($userdata->usertype == "Tandarts"): ?>
             <!-- If the user is a tandarts, show the following links -->
             <a href="logout.php">Logout</a>

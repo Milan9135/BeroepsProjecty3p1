@@ -12,7 +12,16 @@ function loadNavbar() {
 window.onload = loadNavbar;
 
 // Use where you want navbar to be inserted
-// <div id="navbar"></div>
+{/* <div id="navbar">
+    <nav class="navbar">
+        <a id="placeholder" href="">a</a>
+        <style>
+            #placeholder {
+                opacity: 0;
+    }
+        </style>
+    </nav>
+</div>  */}
 
 // insert in head
 // <script src="navbar.js"></script>

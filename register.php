@@ -50,18 +50,16 @@ if (isset($toegevoegd) && !empty($toegevoegd)) {
 
 <body>
 
-<nav class="navbar">
-    <a href="index.php">Home</a>
-
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="logout.php">Logout</a>
-        <a href="profile.php">Profiel</a> <!-- Add this link to go to the profile page -->
-        <a href="afspraken.php">Afspraken</a>
-    <?php else: ?>
-        <a href="login.php">Login</a>
-        <a href="register.php">Register</a>
-    <?php endif; ?>
-</nav>
+<div id="navbar">
+    <nav class="navbar">
+            <a id="placeholder" href="">a</a>
+            <style>
+                #placeholder {
+                    opacity: 0;
+                }
+            </style>
+        </nav>
+    </div>
 
     <main>
     <div class="register-container">
@@ -103,8 +101,7 @@ if (isset($toegevoegd) && !empty($toegevoegd)) {
     <footer class="footer">
         <p>&copy; 2020 TandartsPlatform</p>
     </footer>
-
-    <script src="script.js"></script>
+    
 </body>
 
 </html>

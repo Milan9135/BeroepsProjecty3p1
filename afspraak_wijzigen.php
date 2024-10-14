@@ -2,7 +2,7 @@
 include 'db.php';
 session_start();
 
-$myDb = new DB("Tandartsdb");
+$myDb = new DB();
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -44,14 +44,19 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kies Datum en Behandeling</title>
     <link rel="stylesheet" href="./styles/Appointments.css">
+    <script src="navbar.js"></script>
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="index.php">Home</a>
-        <a href="afspraken.php">Afspraken</a>
-        <a href="profiel.php">Mijn account</a>
-        <a href="logout.php">Logout</a>
+    <div id="navbar">
+        <nav class="navbar">
+            <a id="placeholder" href="">a</a>
+            <style>
+                #placeholder {
+                    opacity: 0;
+                }
+            </style>
+        </nav>
     </div>
 
     <main>
@@ -63,7 +68,7 @@ $behandelingen = $myDb->execute("SELECT DISTINCT Beschrijving FROM Behandelingen
                 <form action="./functions/select_dentist_and_time.php" method="post">
                 <?php elseif ($user['Usertype'] == 'Tandarts'): ?>
                     <form action="./dentist_editAppointment.php" method="post">
-                    <input type="hidden" name="patientID" value="<?php echo htmlspecialchars($patientID); ?>">
+                        <input type="hidden" name="patientID" value="<?php echo htmlspecialchars($patientID); ?>">
 
                     <?php endif; ?>
 

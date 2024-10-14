@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `Afspraken` (
   `Tijd` TIME NOT NULL,
   `Beschrijving` VARCHAR(225) NULL,
   `geannuleerd` TINYINT(1) NOT NULL DEFAULT 0,
+  `voltooid` TINYINT(1) NOT NULL DEFAULT 0, -- Nieuwe kolom toegevoegd
   `userID` INT NOT NULL,
   `tandartsID` INT NOT NULL,
   `BehandelingenID` INT NOT NULL,

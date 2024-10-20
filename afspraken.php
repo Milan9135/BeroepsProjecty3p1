@@ -62,9 +62,23 @@ if ($user['Usertype'] == 'Tandarts') {
 if (isset($_POST['cancel_appointment'])) {
     $afspraakID = $_POST['afspraakID'];
 
+    // Haal de userID van de afspraak op
+    $afspraakQuery = $myDb->execute("SELECT userID FROM Afspraken WHERE afspraakID = ?", [$afspraakID]);
+    $afspraak = $afspraakQuery->fetch(PDO::FETCH_ASSOC);
+
     // Markeer de afspraak als geannuleerd
     $myDb->execute("UPDATE Afspraken SET geannuleerd = 1 WHERE afspraakID = ?", [$afspraakID]);
 
+    // Voeg een notificatie toe voor de patiënt
+    if ($afspraak) {
+        $patientUserID = $afspraak['userID'];
+        $message = "Uw afspraak is geannuleerd door de tandarts.";
+        $myDb->execute("INSERT INTO Notificaties (userID, bericht) VALUES (?, ?)", [$patientUserID, $message]);
+    }
+    // Voeg een notificatie toe
+    $userID = $_SESSION['user_id'];  // Haal de ingelogde gebruiker op
+    $message = "Uw afspraak is geannuleerd.";
+    $myDb->execute("INSERT INTO Notificaties (userID, bericht) VALUES (?, ?)", [$userID, $message]);
     // Redirect naar de pagina om de wijzigingen weer te geven
     header('Location: afspraken.php');
     exit();
@@ -75,6 +89,16 @@ if (isset($_POST['complete_appointment'])) {
 
     // Update de afspraak naar voltooid
     $myDb->execute("UPDATE Afspraken SET voltooid = 1 WHERE afspraakID = ?", [$afspraakID]);
+     // Haal de userID van de afspraak op
+     $afspraakQuery = $myDb->execute("SELECT userID FROM Afspraken WHERE afspraakID = ?", [$afspraakID]);
+     $afspraak = $afspraakQuery->fetch(PDO::FETCH_ASSOC);
+ 
+     // Voeg een notificatie toe voor de patiënt
+     if ($afspraak) {
+         $patientUserID = $afspraak['userID'];
+         $message = "Uw afspraak is succesvol voltooid.";
+         $myDb->execute("INSERT INTO Notificaties (userID, bericht) VALUES (?, ?)", [$patientUserID, $message]);
+     }
 
     // Redirect naar de afsprakenpagina om de wijzigingen te tonen
     header('Location: afspraken.php');
@@ -89,7 +113,7 @@ if (isset($_POST['complete_appointment'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mijn Afspraken - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/afspraak-annuleren.css">
-    
+
     <script src="objects/navbar.js"></script>
 </head>
 
@@ -158,7 +182,7 @@ if (isset($_POST['complete_appointment'])) {
                 <div class="appointment-button" id="conobomama">
                     <a href="./createAppointments.php" id="yh"> Afspraak maken</a>
                 </div>
-            
+
                 <div class="treatmentHistory">
                     <h2>Behandelgeschiedenis</h2>
                     <?php if (count($treatmentHistory) > 0): ?>

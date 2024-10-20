@@ -164,3 +164,41 @@ button[type="submit"]:hover {
         transform: translateY(0);
     }
 }
+/* Popup container */
+.popup {
+    display: none; /* Verberg standaard */
+    position: fixed;
+    z-index: 1000;
+    right: 20px; /* Plaats aan de rechterkant */
+    top: 50%;
+    transform: translateY(-50%); /* Verticaal centreren */
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px; /* Breedte van de pop-up */
+}
+
+/* Overlay */
+.popup-overlay {
+    display: none; /* Verberg standaard */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Onder de pop-up */
+}
+.notiButton{
+    background-color: #1a1a2e;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

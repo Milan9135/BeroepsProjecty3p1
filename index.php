@@ -1,8 +1,8 @@
 <?php
 
 include 'objects/user.php';
-
 session_start();
+include 'notifications.php';
 
 if (isset($_SESSION['user_id'])) {
     $user = $_SESSION['userData'];
@@ -88,7 +88,7 @@ if (isset($_SESSION['user_id'])) {
             </article>
         </section>
     </main>
-
+<script>showPopup()</script>
     <footer class="footer">
         <p>&copy; 2020 TandartsPlatform</p>
     </footer>

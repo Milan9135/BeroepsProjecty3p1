@@ -50,6 +50,9 @@ $myDb->execute($updateQuery, [
     $appointmentID,
     $userId
 ]);
+// Voeg een notificatie toe voor de gebruiker
+$message = "Uw afspraak is succesvol gewijzigd naar $selectedDate om $selectedTime met tandarts " . htmlspecialchars($treatmentDescription) . ".";
+$myDb->execute("INSERT INTO Notificaties (userID, bericht) VALUES (?, ?)", [$userId, $message]);
 
 echo "Afspraak succesvol gewijzigd.";
 header('Location: ../afspraken.php');

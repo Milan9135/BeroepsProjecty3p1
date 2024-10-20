@@ -48,6 +48,9 @@ $myDb->execute(
     "INSERT INTO Afspraken (Datum, Tijd, Beschrijving, BehandelingenID, userID, tandartsID) VALUES (?, ?, ?, ?, ?, ?)",
     [$date, $time, $treatmentDescription, $treatmentID, $userId, $tandartsID]
 );
+// Voeg een notificatie toe voor de gebruiker
+$message = "Uw afspraak is succesvol gemaakt op $date om $time met tandarts $tandartsNaam.";
+$myDb->execute("INSERT INTO Notificaties (userID, bericht) VALUES (?, ?)", [$userId, $message]);
 ?>
 
 <!DOCTYPE html>

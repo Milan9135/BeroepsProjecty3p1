@@ -81,3 +81,13 @@ CREATE TABLE IF NOT EXISTS `Verzekeringen` (
   PRIMARY KEY (`VerzekeringenID`),
   FOREIGN KEY (`userID`) REFERENCES Users(`userID`)
 );
+-- Create notificaties table
+CREATE TABLE IF NOT EXISTS Notificaties (
+    `notificatieID` INT NOT NULL AUTO_INCREMENT,
+    `userID` INT NOT NULL,
+    `bericht` TEXT NOT NULL,
+    `gelezen` TINYINT(1) NOT NULL DEFAULT 0,
+    `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`notificatieID`),
+    FOREIGN KEY (`userID`) REFERENCES Users(`userID`)
+);

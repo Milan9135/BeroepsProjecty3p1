@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $sql = "UPDATE Verzekeringen SET Beschrijving = ? WHERE VerzekeringenID = ? AND userID = ?";
             $db->update($sql, [$description, $insuranceID, $userID]);
         }
-        $message = "Insurance information updated successfully!";
+        $message = "Verzekering informatie bijgewerkt!";
     }
 
     // Delete an insurance
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $insuranceIDToDelete = $_POST['delete'];
         $sql = "DELETE FROM Verzekeringen WHERE VerzekeringenID = ? AND userID = ?";
         $db->delete($sql, [$insuranceIDToDelete, $userID]);
-        $message = "Insurance deleted successfully!";
+        $message = "Verzekering successvol verwijderd!";
     }
 
     // Refresh the page to fetch updated insurance data
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <main>
-        <h1>Manage Insurance Information</h1>
+        <h1>Verzekering informatie</h1>
         <div class="form-container">
 
             <!-- Form for updating or deleting existing insurances -->
@@ -88,26 +88,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <?php if (!empty($existingInsurance)) : ?>
                     <?php foreach ($existingInsurance as $insurance) : ?>
                         <div class="input-group">
-                            <label for="insuranceDesc_<?php echo $insurance['VerzekeringenID']; ?>">Insurance Description:</label>
+                            <label for="insuranceDesc_<?php echo $insurance['VerzekeringenID']; ?>">Verzekering beschrijving:</label>
                             <input type="text" id="insuranceDesc_<?php echo $insurance['VerzekeringenID']; ?>"
                                 name="insuranceDesc[<?php echo $insurance['VerzekeringenID']; ?>]"
                                 value="<?php echo $insurance['Beschrijving']; ?>" required>
-                            <button type="submit" name="delete" value="<?php echo $insurance['VerzekeringenID']; ?>" class="delete-btn">Delete</button>
+                            <button type="submit" name="delete" value="<?php echo $insurance['VerzekeringenID']; ?>" class="delete-btn">Verwijder</button>
                         </div>
                     <?php endforeach; ?>
-                    <button type="submit" name="update">Apply Changes</button>
+                    <button type="submit" name="update">Pas veranderingen toe</button>
                 <?php else : ?>
-                    <p>No insurance information found. Add a new one below.</p>
+                    <p>Geen verzekering informatie gevonden. Voeg rechts een nieuwe toe.</p>
                 <?php endif; ?>
             </form>
 
             <!-- Form for adding new insurance -->
             <form method="POST" action="">
                 <div class="input-group">
-                    <label for="newInsuranceDesc">Add New Insurance:</label>
-                    <input type="text" id="newInsuranceDesc" name="newInsuranceDesc" placeholder="New Insurance Description">
+                    <label for="newInsuranceDesc">Voeg verzekering toe:</label>
+                    <input type="text" id="newInsuranceDesc" name="newInsuranceDesc" placeholder="Beschrijving">
                 </div>
-                <button type="submit" name="add">Add Insurance</button>
+                <button type="submit" name="add">Voeg toe</button>
                 <div class="message"><?php echo $message; ?></div>
             </form>
         </div>

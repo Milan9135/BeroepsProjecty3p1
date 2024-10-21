@@ -190,3 +190,16 @@ button[type="submit"]:hover {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+.patientbutton{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: flex-start;
+    
+}
+
+.afspraken1{
+    margin-top: 5em;
+    width: 50%;
+}

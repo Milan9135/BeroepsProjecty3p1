@@ -89,16 +89,16 @@ if (isset($_POST['complete_appointment'])) {
 
     // Update de afspraak naar voltooid
     $myDb->execute("UPDATE Afspraken SET voltooid = 1 WHERE afspraakID = ?", [$afspraakID]);
-     // Haal de userID van de afspraak op
-     $afspraakQuery = $myDb->execute("SELECT userID FROM Afspraken WHERE afspraakID = ?", [$afspraakID]);
-     $afspraak = $afspraakQuery->fetch(PDO::FETCH_ASSOC);
- 
-     // Voeg een notificatie toe voor de patiënt
-     if ($afspraak) {
-         $patientUserID = $afspraak['userID'];
-         $message = "Uw afspraak is succesvol voltooid.";
-         $myDb->execute("INSERT INTO Notificaties (userID, bericht) VALUES (?, ?)", [$patientUserID, $message]);
-     }
+    // Haal de userID van de afspraak op
+    $afspraakQuery = $myDb->execute("SELECT userID FROM Afspraken WHERE afspraakID = ?", [$afspraakID]);
+    $afspraak = $afspraakQuery->fetch(PDO::FETCH_ASSOC);
+
+    // Voeg een notificatie toe voor de patiënt
+    if ($afspraak) {
+        $patientUserID = $afspraak['userID'];
+        $message = "Uw afspraak is succesvol voltooid.";
+        $myDb->execute("INSERT INTO Notificaties (userID, bericht) VALUES (?, ?)", [$patientUserID, $message]);
+    }
 
     // Redirect naar de afsprakenpagina om de wijzigingen te tonen
     header('Location: afspraken.php');
@@ -113,7 +113,7 @@ if (isset($_POST['complete_appointment'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mijn Afspraken - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/afspraak-annuleren.css">
-    
+
     <script src="objects/navbar.js"></script>
 </head>
 
@@ -135,54 +135,55 @@ if (isset($_POST['complete_appointment'])) {
             <br>
             <?php if ($user['Usertype'] == 'Patiënt'): ?>
 
-                <div class="appointments-container">
-                    <h2>Mijn Afspraken</h2>
-                    <?php if (count($afspraken) > 0): ?>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Datum</th>
-                                    <th>Tijd</th>
-                                    <th>Behandeling</th>
-                                    <th>Tandarts</th>
-                                    <th>Actie</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($afspraken as $afspraak): ?>
+                <div class="afspraken1">
+                    <div class="appointments-container">
+                        <h2>Mijn Afspraken</h2>
+                        <?php if (count($afspraken) > 0): ?>
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($afspraak['afspraakDatum']); ?></td>
-                                        <td><?php echo htmlspecialchars($afspraak['afspraakTijd']); ?></td>
-                                        <td><?php echo htmlspecialchars($afspraak['behandeling']); ?></td>
-                                        <td><?php echo htmlspecialchars($afspraak['tandarts']); ?></td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <!-- Knop om de afspraak te wijzigen -->
-                                                <form action="afspraakWijzigen.php" method="post">
-                                                    <input type="hidden" name="afspraakID" id="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
-                                                    <button type="submit" name="edit_appointment">Wijzigen</button>
-                                                </form>
-
-                                                <!-- Knop om de afspraak te annuleren -->
-                                                <form action="afspraken.php" method="post">
-                                                    <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
-                                                    <button type="submit" name="cancel_appointment">Annuleren</button>
-                                                </form>
-                                            </div>
-                                        </td>
+                                        <th>Datum</th>
+                                        <th>Tijd</th>
+                                        <th>Behandeling</th>
+                                        <th>Tandarts</th>
+                                        <th>Actie</th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    <?php else: ?>
-                        <p>Je hebt geen toekomstige afspraken.</p>
-                    <?php endif; ?>
-                </div>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($afspraken as $afspraak): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($afspraak['afspraakDatum']); ?></td>
+                                            <td><?php echo htmlspecialchars($afspraak['afspraakTijd']); ?></td>
+                                            <td><?php echo htmlspecialchars($afspraak['behandeling']); ?></td>
+                                            <td><?php echo htmlspecialchars($afspraak['tandarts']); ?></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <!-- Knop om de afspraak te wijzigen -->
+                                                    <form action="afspraakWijzigen.php" method="post">
+                                                        <input type="hidden" name="afspraakID" id="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
+                                                        <button type="submit" name="edit_appointment">Wijzigen</button>
+                                                    </form>
 
-                <div class="appointment-button" id="conobomama">
-                    <a href="./createAppointments.php" id="yh"> Afspraak maken</a>
-                </div>
+                                                    <!-- Knop om de afspraak te annuleren -->
+                                                    <form action="afspraken.php" method="post">
+                                                        <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
+                                                        <button type="submit" name="cancel_appointment">Annuleren</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        <?php else: ?>
+                            <p>Je hebt geen toekomstige afspraken.</p>
+                        <?php endif; ?>
+                    </div>
 
+                    <div class="appointment-button" id="conobomama">
+                        <a href="./createAppointments.php" id="yh"> Afspraak maken</a>
+                    </div>
+                </div>
                 <div class="treatmentHistory">
                     <h2>Behandelgeschiedenis</h2>
                     <?php if (count($treatmentHistory) > 0): ?>
@@ -261,7 +262,9 @@ if (isset($_POST['complete_appointment'])) {
 
 
     </main>
-    <script>showPopup()</script>
+    <script>
+        showPopup()
+    </script>
 
     <div class="footer">
         <p>&copy; 2024 Tandartspraktijk. Alle rechten voorbehouden.</p>

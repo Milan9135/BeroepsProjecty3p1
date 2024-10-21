@@ -13,7 +13,7 @@ INSERT INTO `Tandartsdb`.`Tandarts` (`Naam`, `Geboortedatum`, `Telefoonnummer`, 
 ('Alice Johnson', '1990-03-10', '555-987-6543', '321 Oak St, Seattle, WA', 4.6, 'Preventieve Tandheelkunde', 'Gespecialiseerd in preventieve zorg en tandverzorging.', 4);
 
 -- Voeg tijdsloten toe voor de tandartsen
-INSERT INTO `Tandartsdb`.`Tijdsloten` (`Tijd`, `userID`) VALUES
+INSERT INTO `Tandartsdb`.`Tijdsloten` (`Tijd`, `tandartsID`) VALUES
 ('08:00:00', 1), ('09:00:00', 1), ('10:00:00', 1), ('11:00:00', 1), ('12:00:00', 1), -- Voor LeBron James
 ('11:00:00', 2), ('12:00:00', 2), ('13:00:00', 2), ('14:00:00', 2), ('15:00:00', 2), -- Voor John Smith
 ('14:00:00', 3), ('15:00:00', 3), ('16:00:00', 3), ('17:00:00', 3), ('18:00:00', 3), -- Voor Jane Doe

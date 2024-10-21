@@ -1,7 +1,7 @@
 <?php
-include 'db.php';
-session_start();
 
+session_start();
+include 'notifications.php';
 $myDb = new DB();
 
 if (!isset($_SESSION['user_id'])) {
@@ -113,7 +113,7 @@ if (isset($_POST['complete_appointment'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mijn Afspraken - Tandartspraktijk</title>
     <link rel="stylesheet" href="./styles/afspraak-annuleren.css">
-
+    
     <script src="objects/navbar.js"></script>
 </head>
 
@@ -261,7 +261,7 @@ if (isset($_POST['complete_appointment'])) {
 
 
     </main>
-
+    <script>showPopup()</script>
 
     <div class="footer">
         <p>&copy; 2024 Tandartspraktijk. Alle rechten voorbehouden.</p>

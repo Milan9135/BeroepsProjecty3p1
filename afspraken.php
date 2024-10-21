@@ -184,9 +184,23 @@ if (isset($_POST['complete_appointment'])) {
                         <a href="./createAppointments.php" id="yh"> Afspraak maken</a>
                     </div>
                 </div>
-                <div class="treatmentHistory">
-                    <h2>Behandelgeschiedenis</h2>
-                    <?php if (count($treatmentHistory) > 0): ?>
+
+                <?php if (count($treatmentHistory) > 0): ?>
+                    <style>
+                        .patientbutton {
+                            justify-content: space-around;
+                            width: 100%;
+                        }
+
+                        .afspraken1 {
+                            width: 50%;
+                        }
+                        .treatmentHistory{
+                            width: 50%;
+                        }
+                    </style>
+                    <div class="treatmentHistory">
+                        <h2>Behandelgeschiedenis</h2>
                         <table>
                             <thead>
                                 <tr>
@@ -208,52 +222,52 @@ if (isset($_POST['complete_appointment'])) {
                             </tbody>
                         </table>
                     <?php else: ?>
-                        <p>Er is nog geen behandelgeschiedenis.</p>
+
                     <?php endif; ?>
-                </div>
+                    </div>
 
-            <?php elseif ($user['Usertype'] == 'Tandarts'): ?>
-                <h2>Afspraken Overzicht</h2>
-                <?php if (count($afspraken) > 0): ?>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Datum</th>
-                                <th>Tijd</th>
-                                <th>Behandeling</th>
-                                <th>Patiënt</th>
-                                <th>Actie</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($afspraken as $afspraak): ?>
+                <?php elseif ($user['Usertype'] == 'Tandarts'): ?>
+                    <h2>Afspraken Overzicht</h2>
+                    <?php if (count($afspraken) > 0): ?>
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($afspraak['afspraakDatum']); ?></td>
-                                    <td><?php echo htmlspecialchars($afspraak['afspraakTijd']); ?></td>
-                                    <td><?php echo htmlspecialchars($afspraak['behandeling']); ?></td>
-                                    <td><?php echo htmlspecialchars($afspraak['patiënt']); ?></td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <form action="afspraken.php" method="post">
-                                                <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
-                                                <button type="submit" name="complete_appointment">Voltooid</button>
-                                            </form>
-                                            <form action="afspraken.php" method="post">
-                                                <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
-
-                                                <button type="submit" name="cancel_appointment">Annuleren</button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <th>Datum</th>
+                                    <th>Tijd</th>
+                                    <th>Behandeling</th>
+                                    <th>Patiënt</th>
+                                    <th>Actie</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php else: ?>
-                    <p>Er zijn geen toekomstige afspraken.</p>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($afspraken as $afspraak): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($afspraak['afspraakDatum']); ?></td>
+                                        <td><?php echo htmlspecialchars($afspraak['afspraakTijd']); ?></td>
+                                        <td><?php echo htmlspecialchars($afspraak['behandeling']); ?></td>
+                                        <td><?php echo htmlspecialchars($afspraak['patiënt']); ?></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <form action="afspraken.php" method="post">
+                                                    <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
+                                                    <button type="submit" name="complete_appointment">Voltooid</button>
+                                                </form>
+                                                <form action="afspraken.php" method="post">
+                                                    <input type="hidden" name="afspraakID" value="<?php echo $afspraak['afspraakID']; ?>">
+
+                                                    <button type="submit" name="cancel_appointment">Annuleren</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p>Er zijn geen toekomstige afspraken.</p>
+                    <?php endif; ?>
                 <?php endif; ?>
-            <?php endif; ?>
-            <br>
+                <br>
         </div>
 
 

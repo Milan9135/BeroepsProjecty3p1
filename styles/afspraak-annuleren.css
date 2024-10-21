@@ -73,7 +73,7 @@ main {
     padding: 40px 30px;
     border-radius: 14px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    width: 90%;
+    /* width: 90%; */
     max-width: 600px;
     animation: fadeIn 1s ease-in-out;
     margin-top: 5em;
@@ -191,15 +191,16 @@ button[type="submit"]:hover {
     transition: background-color 0.3s ease;
 }
 .patientbutton{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
+    display: flex; 
     align-items: flex-start;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    /* width: 100%; */
+   
     
 }
 
 .afspraken1{
     margin-top: 5em;
-    width: 50%;
+    /* width: 50%; */
 }
